@@ -1,0 +1,7 @@
+<mat-slide-toggle
+  class="switch"
+  [aria-label]="ariaLabel()"
+  [checked]="checked()"
+  [disabled]="disabled()"
+  (change)="changed.emit($event.checked)"
+/>

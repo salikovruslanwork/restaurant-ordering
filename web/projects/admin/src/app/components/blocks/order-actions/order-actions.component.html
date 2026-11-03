@@ -1,0 +1,23 @@
+<div class="order-actions" [class.order-actions--block]="block()">
+  @if (saving()) {
+    <app-saving-indicator />
+  } @else {
+    @for (action of actions(); track action.target) {
+      <app-button
+        class="order-actions__button"
+        [ariaLabel]="
+          action.isCancel
+            ? 'Cancel order #' + order().number
+            : action.label + ', order #' + order().number
+        "
+        [disabled]="readOnly()"
+        [size]="block() ? ButtonSize.Medium : ButtonSize.Small"
+        [variant]="action.isCancel ? ButtonVariant.TextDanger : ButtonVariant.Filled"
+        (click)="selected.emit(action)"
+        >{{ action.label }}</app-button
+      >
+    } @empty {
+      <span class="order-actions__none">No actions</span>
+    }
+  }
+</div>

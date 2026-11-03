@@ -1,0 +1,78 @@
+<div class="orders-table">
+  <div class="orders-table__grid" aria-label="Orders" role="table">
+    <div class="orders-table__head" role="rowgroup">
+      <div class="orders-table__row" role="row">
+        <span class="orders-table__heading" role="columnheader"
+          ><span class="orders-table__hidden">Details</span></span
+        >
+        <span class="orders-table__heading" role="columnheader">Order</span>
+        <span class="orders-table__heading orders-table__time" role="columnheader">Time</span>
+        <span class="orders-table__heading" role="columnheader">Items</span>
+        <span class="orders-table__heading orders-table__heading--end" role="columnheader"
+          >Total</span
+        >
+        <span class="orders-table__heading" role="columnheader">Status</span>
+        <span
+          class="orders-table__heading orders-table__heading--end orders-table__actions"
+          role="columnheader"
+          >Actions</span
+        >
+      </div>
+    </div>
+    <div role="rowgroup">
+      @for (row of rows(); track row.order.id) {
+        @let order = row.order;
+        @let isOpen = expandedIds().has(order.id);
+        <div
+          class="orders-table__row orders-table__row--order"
+          role="row"
+          [class.orders-table__row--fresh]="row.isFresh"
+          [class.orders-table__row--open]="isOpen"
+        >
+          <span class="orders-table__cell" role="cell">
+            <app-button
+              [ariaExpanded]="isOpen"
+              [ariaLabel]="'Details of order #' + order.number"
+              [icon]="isOpen ? 'expand_less' : 'expand_more'"
+              [size]="ButtonSize.Small"
+              [variant]="ButtonVariant.Icon"
+              (click)="toggled.emit(order.id)"
+            />
+          </span>
+          <span class="orders-table__cell orders-table__number" role="cell"
+            >#{{ order.number }}</span
+          >
+          <span
+            class="orders-table__cell orders-table__cell--muted orders-table__time"
+            role="cell"
+            >{{ order.createdAt | timeAgo: now() }}</span
+          >
+          <span class="orders-table__cell orders-table__items" role="cell" [title]="row.summary">{{
+            row.summary
+          }}</span>
+          <span class="orders-table__cell orders-table__cell--end" role="cell">
+            <app-money small [amount]="order.total" />
+          </span>
+          <span class="orders-table__cell" role="cell">
+            <app-status-chip [status]="order.status" />
+          </span>
+          <span class="orders-table__cell orders-table__actions" role="cell">
+            <app-order-actions
+              [order]="order"
+              [readOnly]="readOnly()"
+              [saving]="row.isSaving"
+              (selected)="statusChanged.emit({ order, target: $event.target })"
+            />
+          </span>
+        </div>
+        @if (isOpen) {
+          <div class="orders-table__detail" role="row">
+            <span class="orders-table__detail-cell" role="cell">
+              <app-order-lines [order]="order" />
+            </span>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div>

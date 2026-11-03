@@ -1,0 +1,26 @@
+<section class="dialog dialog--{{ size() }}" [class.dialog--hero]="heroTone()">
+  <div class="dialog__header">
+    <app-button
+      class="dialog__close"
+      ariaLabel="Close"
+      icon="close"
+      [disabled]="closeDisabled()"
+      [variant]="ButtonVariant.Icon"
+      (click)="closeRequested.emit()"
+    />
+    @if (heroTone(); as tone) {
+      <div class="dialog__hero dialog__hero--{{ tone }}">
+        <ng-content select="[appDialogIcon]" />
+      </div>
+    }
+    <h2 class="dialog__title" [id]="titleId">
+      <ng-content select="[appDialogTitle]" />
+    </h2>
+  </div>
+  <div class="dialog__content">
+    <ng-content select="[appDialogContent]" />
+  </div>
+  <div class="dialog__actions">
+    <ng-content select="[appDialogActions]" />
+  </div>
+</section>

@@ -1,0 +1,80 @@
+<div
+  class="items-table"
+  aria-label="Menu items"
+  role="table"
+  [attr.aria-rowcount]="rows().length + 1"
+>
+  <div class="items-table__head" role="rowgroup">
+    <div class="items-table__row" aria-rowindex="1" role="row">
+      <span class="items-table__heading" role="columnheader"
+        ><span class="items-table__hidden">Image</span></span
+      >
+      <span class="items-table__heading" role="columnheader">Name</span>
+      <span class="items-table__heading" role="columnheader">Category</span>
+      <span class="items-table__heading items-table__heading--end" role="columnheader">Price</span>
+      <span class="items-table__heading" role="columnheader">Availability</span>
+      <span class="items-table__heading items-table__heading--end" role="columnheader"
+        >Actions</span
+      >
+    </div>
+  </div>
+  <cdk-virtual-scroll-viewport class="items-table__body" role="rowgroup" [itemSize]="rowHeight">
+    <div
+      *cdkVirtualFor="let row of rows(); trackBy: trackById; let index = index"
+      class="items-table__row items-table__row--item"
+      role="row"
+      [attr.aria-rowindex]="index + 2"
+      [class.items-table__row--fresh]="freshIds().has(row.id)"
+    >
+      <span class="items-table__cell" role="cell">
+        <app-dish-image [muted]="!row.isAvailable" [name]="row.name" [size]="DishImageSize.Thumb" />
+      </span>
+      <span class="items-table__cell" role="cell">
+        <span class="items-table__name">{{ row.name }}</span>
+        <span class="items-table__description">{{ row.description }}</span>
+      </span>
+      <span class="items-table__cell items-table__cell--muted" role="cell">{{
+        row.categoryName
+      }}</span>
+      <span class="items-table__cell items-table__cell--end" role="cell">
+        @if (row.pricing.kind === PricingKind.Fixed) {
+          <app-money small [amount]="row.pricing.price" />
+        } @else {
+          <app-money [variant]="MoneyVariant.OpenChip" />
+        }
+      </span>
+      <span class="items-table__cell items-table__availability" role="cell">
+        <app-switch
+          [ariaLabel]="row.name + ' available'"
+          [checked]="row.isAvailable"
+          [disabled]="readOnly() || row.isSaving || row.isDeleting"
+          (changed)="availabilityChanged.emit({ id: row.id, isAvailable: $event })"
+        />
+        @if (row.isSaving) {
+          <app-saving-indicator />
+        } @else {
+          <span class="items-table__state">{{
+            row.isAvailable ? 'Available' : 'Unavailable'
+          }}</span>
+        }
+      </span>
+      <span class="items-table__cell items-table__cell--end" role="cell">
+        <app-button
+          icon="edit"
+          [ariaLabel]="'Edit ' + row.name"
+          [disabled]="readOnly() || row.isDeleting"
+          [variant]="ButtonVariant.Icon"
+          (click)="editRequested.emit(row.id)"
+        />
+        <app-button
+          icon="delete"
+          [ariaLabel]="'Delete ' + row.name"
+          [disabled]="readOnly() || row.isDeleting"
+          [loading]="row.isDeleting"
+          [variant]="ButtonVariant.Icon"
+          (click)="deleteRequested.emit(row)"
+        />
+      </span>
+    </div>
+  </cdk-virtual-scroll-viewport>
+</div>

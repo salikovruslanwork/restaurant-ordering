@@ -1,0 +1,35 @@
+@use 'tokens' as t;
+
+.connection-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: t.$space-2;
+  min-height: 32px;
+  padding: 6px t.$space-4;
+  box-sizing: border-box;
+  font: t.$text-label-m;
+  text-align: center;
+  animation: fade-in t.$motion-medium t.$motion-ease;
+}
+
+.connection-banner--reconnecting {
+  background: t.$color-secondary-container;
+  color: t.$color-on-secondary-container;
+}
+
+.connection-banner--offline {
+  background: t.$color-neutral-container;
+  color: t.$color-on-neutral-container;
+}
+
+.connection-banner--online {
+  background: t.$color-tertiary-container;
+  color: t.$color-on-tertiary-container;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}

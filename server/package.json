@@ -1,0 +1,40 @@
+{
+  "name": "@restaurant/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nest build",
+    "start": "nest start --watch",
+    "start:prod": "node dist/main.js",
+    "reset": "node -e \"require('node:fs').rmSync('data/db.json', { force: true })\"",
+    "clear": "node -e \"require('node:fs').writeFileSync('data/db.json', JSON.stringify({ categories: [], items: [], orders: [] }))\"",
+    "lint": "eslint src",
+    "test": "tsc -p tsconfig.json --noEmit && vitest run --coverage"
+  },
+  "dependencies": {
+    "@nestjs/common": "^12.3.2",
+    "@nestjs/core": "^12.3.2",
+    "@nestjs/platform-express": "^12.3.2",
+    "@restaurant/contracts": "0.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "compression": "^1.8.2",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^12.0.11",
+    "@nestjs/schematics": "^12.0.12",
+    "@nestjs/testing": "^12.3.2",
+    "@swc/core": "^1.16.21",
+    "@types/compression": "^1.8.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.6",
+    "@types/supertest": "^7.2.1",
+    "@vitest/coverage-v8": "^5.0.5",
+    "supertest": "^7.3.1",
+    "unplugin-swc": "^2.0.0",
+    "vitest": "^5.0.5"
+  }
+}

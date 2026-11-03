@@ -1,0 +1,36 @@
+@let order = row().order;
+<article
+  class="order-admin-card"
+  [attr.aria-label]="'Order #' + order.number"
+  [class.order-admin-card--fresh]="row().isFresh"
+>
+  <div class="order-admin-card__header">
+    <h2 class="order-admin-card__number">#{{ order.number }}</h2>
+    <span class="order-admin-card__time">{{ order.createdAt | timeAgo: now() }}</span>
+    <app-status-chip [status]="order.status" />
+  </div>
+  <p class="order-admin-card__items">{{ row().summary }}</p>
+  <div class="order-admin-card__meta">
+    <app-money [amount]="order.total" />
+    <app-button
+      [ariaExpanded]="expanded()"
+      [icon]="expanded() ? 'expand_less' : 'expand_more'"
+      [size]="ButtonSize.Small"
+      [variant]="ButtonVariant.Text"
+      (click)="toggled.emit()"
+      >{{ expanded() ? 'Hide details' : 'Details' }}</app-button
+    >
+  </div>
+  @if (expanded()) {
+    <app-order-lines class="order-admin-card__lines" inset [order]="order" />
+  }
+  @if (hasActions() || row().isSaving) {
+    <app-order-actions
+      block
+      [order]="order"
+      [readOnly]="readOnly()"
+      [saving]="row().isSaving"
+      (selected)="statusChanged.emit({ order, target: $event.target })"
+    />
+  }
+</article>

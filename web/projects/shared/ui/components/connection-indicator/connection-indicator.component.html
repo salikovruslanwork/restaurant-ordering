@@ -1,0 +1,12 @@
+<span
+  class="connection-indicator connection-indicator--{{ status() }}"
+  [attr.title]="compact() ? 'Connection: ' + label() : null"
+  [class.connection-indicator--compact]="compact()"
+>
+  <span class="connection-indicator__dot"></span>
+  @if (compact()) {
+    <span class="connection-indicator__hidden-label">Connection: {{ label() }}</span>
+  } @else {
+    <span>{{ label() }}</span>
+  }
+</span>

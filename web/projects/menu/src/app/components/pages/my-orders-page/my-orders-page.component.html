@@ -1,0 +1,62 @@
+<div class="my-orders-page">
+  <app-button class="my-orders-page__back" icon="arrow_back" link="/" [variant]="ButtonVariant.Text"
+    >Menu</app-button
+  >
+  <h1 class="my-orders-page__title">My orders</h1>
+  @switch (content()) {
+    @case (PageContent.Loading) {
+      <div class="my-orders-page__list" aria-hidden="true">
+        @for (card of skeletonCards; track card) {
+          <div class="my-orders-page__skeleton">
+            <div class="my-orders-page__skeleton-header">
+              <div>
+                <app-skeleton
+                  class="my-orders-page__skeleton-number"
+                  [variant]="SkeletonVariant.Line"
+                />
+                <app-skeleton
+                  class="my-orders-page__skeleton-time"
+                  [variant]="SkeletonVariant.Line"
+                />
+              </div>
+              <app-skeleton
+                class="my-orders-page__skeleton-chip"
+                [variant]="SkeletonVariant.Chip"
+              />
+            </div>
+            <app-skeleton class="my-orders-page__skeleton-items" [variant]="SkeletonVariant.Line" />
+            <app-skeleton [variant]="SkeletonVariant.Progress" />
+            <div class="my-orders-page__skeleton-footer">
+              <app-skeleton
+                class="my-orders-page__skeleton-count"
+                [variant]="SkeletonVariant.Line"
+              />
+              <app-skeleton [variant]="SkeletonVariant.Price" />
+            </div>
+          </div>
+        }
+      </div>
+      <p class="my-orders-page__status" role="status">Loading your orders…</p>
+    }
+    @case (PageContent.Failed) {
+      <app-error-state [text]="loadError" (retry)="retry()" />
+    }
+    @default {
+      @if (orders().length > 0) {
+        <div class="my-orders-page__list">
+          @for (order of orders(); track order.id) {
+            <app-order-card [fresh]="fresh().has(order.id)" [now]="now()" [order]="order" />
+          }
+        </div>
+      } @else {
+        <app-empty-state
+          heading="No orders yet"
+          icon="receipt_long"
+          text="When you place an order, you can follow it here live."
+        >
+          <app-button link="/" [variant]="ButtonVariant.Tonal">Browse the menu</app-button>
+        </app-empty-state>
+      }
+    }
+  }
+</div>

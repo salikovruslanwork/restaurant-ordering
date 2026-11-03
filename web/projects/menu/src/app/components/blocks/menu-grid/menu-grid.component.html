@@ -1,0 +1,26 @@
+<cdk-virtual-scroll-viewport
+  class="menu-grid"
+  aria-label="Dishes"
+  role="list"
+  [class.menu-grid--measuring]="isMeasuring()"
+  [itemSize]="layout().rowHeight"
+>
+  <div
+    *cdkVirtualFor="let row of rows(); trackBy: trackRow"
+    class="menu-grid__row"
+    [style.--menu-grid-columns]="layout().columns"
+    [style.height.px]="layout().rowHeight"
+  >
+    @for (item of row.items; track item.id) {
+      <app-menu-item
+        class="menu-grid__item"
+        role="listitem"
+        [item]="item"
+        [quantity]="quantities()[item.id] ?? 0"
+        (added)="added.emit(item)"
+        (openPriceRequested)="openPriceRequested.emit(item)"
+        (quantityChanged)="quantityChanged.emit({ item, quantity: $event })"
+      />
+    }
+  </div>
+</cdk-virtual-scroll-viewport>

@@ -1,0 +1,18 @@
+<div class="status-filter" aria-label="Filter orders by status" role="group">
+  @for (option of options(); track option.status) {
+    @let isActive = option.status === value();
+    <button
+      class="status-filter__chip"
+      type="button"
+      [attr.aria-pressed]="isActive"
+      [class.status-filter__chip--active]="isActive"
+      (click)="changed.emit(option.status)"
+    >
+      @if (isActive) {
+        <app-icon name="check" [size]="18" />
+      }
+      {{ option.label }}
+      <span class="status-filter__count">{{ option.count }}</span>
+    </button>
+  }
+</div>

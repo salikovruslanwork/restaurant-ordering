@@ -1,0 +1,124 @@
+<ng-template #orderLines>
+  <ul class="checkout-dialog__lines">
+    @for (line of lines(); track line.key) {
+      <li class="checkout-dialog__line">
+        <span class="checkout-dialog__quantity">{{ line.quantity }}×</span>
+        <span
+          >{{ line.name }}
+          @if (line.isCustomPrice) {
+            · <span class="checkout-dialog__your-price">Your price</span>
+          }
+        </span>
+        <span class="checkout-dialog__money">{{ line.lineTotal | money }}</span>
+      </li>
+    }
+  </ul>
+  <app-cart-summary [summary]="summary()" />
+</ng-template>
+
+<app-dialog
+  [closeDisabled]="isSubmitting()"
+  [heroTone]="heroTone()"
+  [size]="DialogSize.Medium"
+  (closeRequested)="close()"
+>
+  <app-icon appDialogIcon [name]="heroIcon()" [size]="30" />
+  <span appDialogTitle>{{ title() }}</span>
+  <div appDialogContent>
+    @switch (step()) {
+      @case (CheckoutStep.Conflict) {
+        <p class="checkout-dialog__lead">{{ conflictText }}</p>
+        <ul class="checkout-dialog__changes">
+          @for (change of changes(); track $index) {
+            <li class="checkout-dialog__change">
+              @switch (change.kind) {
+                @case (CartChangeKind.PriceChanged) {
+                  <app-icon name="sell" [size]="18" />
+                  <span
+                    ><strong>{{ change.name }}</strong
+                    >: price changed <s>{{ change.oldAmount ?? 0 | money }}</s> →
+                    {{ change.newAmount ?? 0 | money }}</span
+                  >
+                }
+                @case (CartChangeKind.DiscountTooHigh) {
+                  <app-icon name="loyalty" [size]="18" />
+                  <span
+                    >Discount reduced from <s>{{ change.oldAmount ?? 0 | money }}</s> to
+                    {{ change.newAmount ?? 0 | money }} — it can’t be more than the subtotal</span
+                  >
+                }
+                @case (CartChangeKind.Unavailable) {
+                  <app-icon name="remove_shopping_cart" [size]="18" />
+                  <span
+                    ><strong>{{ change.name }}</strong> is no longer available — removed from your
+                    order</span
+                  >
+                }
+                @default {
+                  <app-icon name="remove_shopping_cart" [size]="18" />
+                  <span
+                    ><strong>{{ change.name }}</strong> was taken off the menu — removed from your
+                    order</span
+                  >
+                }
+              }
+            </li>
+          }
+        </ul>
+        @if (lines().length > 0) {
+          <p class="checkout-dialog__subhead">Updated order</p>
+          <ng-container [ngTemplateOutlet]="orderLines" />
+        } @else {
+          <p class="checkout-dialog__lead">{{ emptyText }}</p>
+        }
+      }
+      @case (CheckoutStep.Success) {
+        <p class="checkout-dialog__lead">{{ successText }}</p>
+        @if (order(); as placed) {
+          <div class="checkout-dialog__receipt">
+            <span
+              >{{ receiptCount() | pluralize: 'item' }}
+              @if (placed.discount > 0) {
+                · {{ placed.discount | money }} off
+              }
+            </span>
+            <span class="checkout-dialog__total">{{ placed.total | money }}</span>
+          </div>
+        }
+      }
+      @case (CheckoutStep.Error) {
+        <p class="checkout-dialog__lead">{{ errorText() }}</p>
+      }
+      @default {
+        <ng-container [ngTemplateOutlet]="orderLines" />
+        @if (blockHint(); as hint) {
+          <p class="checkout-dialog__hint"><app-icon name="info" [size]="16" />{{ hint }}</p>
+        }
+      }
+    }
+  </div>
+  <ng-container appDialogActions>
+    @switch (step()) {
+      @case (CheckoutStep.Success) {
+        <app-button [variant]="ButtonVariant.Text" (click)="close()">Back to menu</app-button>
+        <app-button icon="receipt_long" (click)="trackOrder()">Track order</app-button>
+      }
+      @case (CheckoutStep.Conflict) {
+        <app-button [variant]="ButtonVariant.Text" (click)="close()">Back to cart</app-button>
+        <app-button [disabled]="!canPlace()" (click)="place()">Confirm updated order</app-button>
+      }
+      @case (CheckoutStep.Error) {
+        <app-button [variant]="ButtonVariant.Text" (click)="close()">Back to cart</app-button>
+        <app-button icon="refresh" [disabled]="!canPlace()" (click)="place()">Try again</app-button>
+      }
+      @default {
+        <app-button [disabled]="isSubmitting()" [variant]="ButtonVariant.Text" (click)="close()"
+          >Back to cart</app-button
+        >
+        <app-button [disabled]="!canPlace()" [loading]="isSubmitting()" (click)="place()">{{
+          isSubmitting() ? 'Placing order…' : 'Place order · ' + (summary().total | money)
+        }}</app-button>
+      }
+    }
+  </ng-container>
+</app-dialog>

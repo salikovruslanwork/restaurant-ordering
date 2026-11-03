@@ -1,0 +1,53 @@
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.items-page__cards {
+  display: block;
+  padding-bottom: 72px;
+}
+
+.items-page__card {
+  height: 72px;
+  padding-bottom: t.$space-2;
+  box-sizing: border-box;
+}
+
+// The shell's scroll container has `contain: strict`, so `fixed` is relative to it, above the nav.
+.items-page__fab {
+  position: fixed;
+  right: t.$space-4;
+  bottom: t.$space-4;
+
+  @include breakpoints.tablet-up {
+    display: none;
+  }
+}
+
+.items-page__skeleton {
+  overflow: hidden;
+  border-radius: t.$radius-card;
+  background: t.$color-surface-container-low;
+}
+
+.items-page__skeleton-row {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: t.$space-4;
+  height: 56px;
+  padding: 0 t.$space-4;
+  border-top: 1px solid t.$color-outline-variant;
+}
+
+.items-page__skeleton-text {
+  width: 40%;
+}
+
+.items-page__status {
+  @include mixins.visually-hidden;
+}

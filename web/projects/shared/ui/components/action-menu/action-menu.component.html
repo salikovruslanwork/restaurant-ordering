@@ -1,0 +1,27 @@
+<button
+  matIconButton
+  type="button"
+  [attr.aria-label]="ariaLabel()"
+  [disabled]="disabled()"
+  [matMenuTriggerFor]="menu"
+>
+  <app-icon name="more_vert" />
+</button>
+<mat-menu #menu="matMenu">
+  @for (item of items(); track item.label) {
+    <button
+      class="action-menu__item"
+      mat-menu-item
+      type="button"
+      [class.action-menu__item--danger]="item.isDanger"
+      (click)="selected.emit(item)"
+    >
+      <span class="action-menu__content">
+        @if (item.icon; as icon) {
+          <app-icon [name]="icon" />
+        }
+        {{ item.label }}
+      </span>
+    </button>
+  }
+</mat-menu>

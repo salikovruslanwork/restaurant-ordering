@@ -1,0 +1,64 @@
+@use 'mixins';
+@use 'tokens' as t;
+
+.money {
+  color: inherit;
+  font: t.$text-price;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.money--small {
+  font-size: 14px;
+}
+
+.money--open {
+  color: t.$color-primary;
+  font: italic 500 14px/1 t.$font-body;
+}
+
+.money--open-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 t.$space-2;
+  border-radius: t.$radius-chip;
+  background: t.$color-secondary-container;
+  color: t.$color-on-secondary-container;
+  font: 600 12px/1 t.$font-body;
+}
+
+.money--changed {
+  display: inline-flex;
+  align-items: baseline;
+  gap: t.$space-1;
+}
+
+.money__old {
+  color: t.$color-on-surface-variant;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.money--changed .money__new {
+  padding: 0 2px;
+  border-radius: 4px;
+
+  // A colour fade only, so it stays on with reduced motion (HANDOFF accessibility notes).
+  animation: money-pulse t.$motion-pulse t.$motion-ease both;
+}
+
+.money__hidden {
+  @include mixins.visually-hidden;
+}
+
+@keyframes money-pulse {
+  0%,
+  60% {
+    background: t.$color-highlight;
+  }
+
+  100% {
+    background: transparent;
+  }
+}

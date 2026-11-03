@@ -1,0 +1,19 @@
+<div aria-live="polite" role="status">
+  @switch (kind()) {
+    @case (ConnectionBannerKind.Reconnecting) {
+      <div class="connection-banner connection-banner--reconnecting">
+        <app-spinner [size]="14" /><span>{{ reconnectingMessage() }}</span>
+      </div>
+    }
+    @case (ConnectionBannerKind.Offline) {
+      <div class="connection-banner connection-banner--offline">
+        <app-icon name="cloud_off" [size]="16" /><span>{{ offlineMessage() }}</span>
+      </div>
+    }
+    @case (ConnectionBannerKind.Online) {
+      <div class="connection-banner connection-banner--online">
+        <app-icon name="cloud_done" [size]="16" /><span>{{ backOnlineMessage }}</span>
+      </div>
+    }
+  }
+</div>

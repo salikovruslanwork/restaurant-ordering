@@ -1,0 +1,48 @@
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.item-admin-card {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: t.$space-3;
+  height: 64px;
+  padding: t.$space-2 t.$space-1 t.$space-2 t.$space-3;
+  border-radius: t.$radius-card;
+  background: t.$color-surface-container-low;
+  box-sizing: border-box;
+}
+
+.item-admin-card__info {
+  min-width: 0;
+}
+
+.item-admin-card__name {
+  margin: 0;
+  overflow: hidden;
+  font: t.$text-title-s;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-admin-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px 0 0;
+  overflow: hidden;
+  color: t.$color-on-surface-variant;
+  font: t.$text-body-s;
+  white-space: nowrap;
+}
+
+.item-admin-card__category {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@include mixins.highlight-pulse('.item-admin-card--fresh');

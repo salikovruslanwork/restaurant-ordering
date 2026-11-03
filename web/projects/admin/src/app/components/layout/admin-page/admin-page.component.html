@@ -1,0 +1,8 @@
+<div class="admin-page">
+  <div class="admin-page__header">
+    <h1 class="admin-page__title">{{ heading() }}</h1>
+    <span class="admin-page__meta"><ng-content select="[appAdminPageMeta]" /></span>
+    <div class="admin-page__actions"><ng-content select="[appAdminPageActions]" /></div>
+  </div>
+  <ng-content />
+</div>

@@ -1,0 +1,253 @@
+@use '@angular/material' as mat;
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+$disabled-container: rgb(43 31 24 / 10%);
+$disabled-label: rgb(43 31 24 / 42%);
+
+@mixin global-styles {
+  html {
+    color-scheme: light;
+
+    @include mat.theme(
+      (
+        color: (
+          theme-type: light,
+          primary: mat.$azure-palette,
+          tertiary: mat.$chartreuse-palette
+        ),
+        typography: (
+          plain-family: t.$font-body,
+          brand-family: t.$font-display
+        ),
+        density: 0
+      )
+    );
+    @include mat.theme-overrides(
+      (
+        primary: t.$color-primary,
+        on-primary: t.$color-on-primary,
+        primary-container: t.$color-primary-container,
+        on-primary-container: t.$color-on-primary-container,
+        secondary: t.$color-secondary,
+        secondary-container: t.$color-secondary-container,
+        on-secondary-container: t.$color-on-secondary-container,
+        tertiary: t.$color-tertiary,
+        on-tertiary: t.$color-on-tertiary,
+        tertiary-container: t.$color-tertiary-container,
+        on-tertiary-container: t.$color-on-tertiary-container,
+        error: t.$color-error,
+        on-error: t.$color-on-error,
+        error-container: t.$color-error-container,
+        on-error-container: t.$color-on-error-container,
+        background: t.$color-surface,
+        on-background: t.$color-on-surface,
+        surface: t.$color-surface,
+        surface-container-low: t.$color-surface-container-low,
+        surface-container: t.$color-surface-container,
+        surface-container-high: t.$color-surface-container-high,
+        on-surface: t.$color-on-surface,
+        on-surface-variant: t.$color-on-surface-variant,
+        outline: t.$color-outline,
+        outline-variant: t.$color-outline-variant,
+        inverse-surface: t.$color-inverse-surface,
+        inverse-on-surface: t.$color-inverse-on-surface,
+        inverse-primary: t.$color-inverse-primary,
+        scrim: t.$color-scrim
+      )
+    );
+  }
+
+  html {
+    @include mat.button-overrides(
+      (
+        filled-container-height: 40px,
+        filled-container-shape: t.$radius-pill,
+        filled-horizontal-padding: t.$space-5,
+        filled-label-text-font: t.$font-body,
+        filled-label-text-size: 14px,
+        filled-label-text-weight: 500,
+        filled-label-text-tracking: normal,
+        tonal-container-height: 40px,
+        tonal-container-shape: t.$radius-pill,
+        tonal-horizontal-padding: t.$space-5,
+        tonal-label-text-font: t.$font-body,
+        tonal-label-text-size: 14px,
+        tonal-label-text-weight: 500,
+        tonal-label-text-tracking: normal,
+        outlined-container-height: 40px,
+        outlined-container-shape: t.$radius-pill,
+        outlined-horizontal-padding: t.$space-5,
+        outlined-label-text-font: t.$font-body,
+        outlined-label-text-size: 14px,
+        outlined-label-text-weight: 500,
+        outlined-label-text-tracking: normal,
+        text-container-height: 40px,
+        text-container-shape: t.$radius-pill,
+        text-horizontal-padding: t.$space-3,
+        text-label-text-font: t.$font-body,
+        text-label-text-size: 14px,
+        text-label-text-weight: 500,
+        text-label-text-tracking: normal,
+        filled-container-color: t.$color-primary,
+        filled-label-text-color: t.$color-on-primary,
+        filled-disabled-container-color: $disabled-container,
+        filled-disabled-label-text-color: $disabled-label,
+        tonal-container-color: t.$color-primary-container,
+        tonal-label-text-color: t.$color-on-primary-container,
+        tonal-disabled-container-color: $disabled-container,
+        tonal-disabled-label-text-color: $disabled-label,
+        outlined-label-text-color: t.$color-primary,
+        outlined-outline-color: t.$color-outline,
+        outlined-disabled-label-text-color: $disabled-label,
+        text-label-text-color: t.$color-primary,
+        text-disabled-label-text-color: $disabled-label
+      )
+    );
+    @include mat.icon-button-overrides(
+      (
+        icon-color: t.$color-on-surface-variant,
+        state-layer-color: t.$color-on-surface-variant,
+        icon-size: 22px,
+        state-layer-size: 48px
+      )
+    );
+    @include mat.fab-overrides(
+      (
+        container-color: t.$color-primary-container,
+        foreground-color: t.$color-on-primary-container,
+        container-shape: 16px,
+        container-elevation-shadow: t.$elevation-3
+      )
+    );
+    @include mat.form-field-overrides(
+      (
+        container-height: 48px,
+        container-vertical-padding: 12px,
+        container-text-font: t.$font-body,
+        container-text-size: 16px,
+        container-text-weight: 400,
+        outlined-container-shape: t.$radius-field,
+        outlined-outline-color: t.$color-outline,
+        outlined-hover-outline-color: t.$color-on-surface-variant,
+        outlined-focus-outline-color: t.$color-primary,
+        outlined-input-text-color: t.$color-on-surface,
+        outlined-error-outline-color: t.$color-error,
+        outlined-error-hover-outline-color: t.$color-error,
+        outlined-error-focus-outline-color: t.$color-error
+      )
+    );
+    @include mat.dialog-overrides(
+      (
+        container-color: transparent,
+        container-elevation-shadow: none,
+        container-shape: 0,
+        container-max-width: none
+      )
+    );
+    @include mat.snack-bar-overrides(
+      (
+        container-color: t.$color-inverse-surface,
+        supporting-text-color: t.$color-inverse-on-surface,
+        supporting-text-font: t.$font-body,
+        supporting-text-size: 14px,
+        button-color: t.$color-inverse-primary,
+        container-shape: t.$radius-snackbar
+      )
+    );
+    @include mat.menu-overrides(
+      (
+        container-color: t.$color-surface-container,
+        container-shape: t.$radius-field,
+        container-elevation-shadow: t.$elevation-3,
+        item-label-text-font: t.$font-body,
+        item-label-text-size: 16px
+      )
+    );
+  }
+
+  body {
+    margin: 0;
+    background: t.$color-surface;
+    color: t.$color-on-surface;
+    font: t.$text-body-m;
+  }
+
+  .overlay-scrim {
+    background: t.$color-scrim;
+  }
+
+  .dialog-panel {
+    --mat-dialog-container-max-width: calc(100vw - 48px);
+    --mat-dialog-container-small-max-width: calc(100vw - 48px);
+  }
+
+  .dialog-panel--small {
+    width: 400px;
+  }
+
+  .dialog-panel--form {
+    width: 480px;
+  }
+
+  .dialog-panel--medium {
+    width: 560px;
+  }
+
+  .dialog-panel--wide {
+    width: 700px;
+  }
+
+  @include breakpoints.mobile {
+    .dialog-panel--form,
+    .dialog-panel--medium,
+    .dialog-panel--wide {
+      --mat-dialog-container-small-max-width: 100vw;
+
+      width: 100vw;
+      height: 100dvh;
+    }
+  }
+
+  .sheet-panel {
+    width: 100%;
+    height: calc(100dvh - 24px);
+    overflow: hidden;
+    border-radius: t.$radius-dialog t.$radius-dialog 0 0;
+    background: t.$color-surface-container-low;
+    box-shadow: t.$elevation-3;
+    animation: sheet-in t.$motion-medium t.$motion-ease-out both;
+
+    @include mixins.reduced-motion {
+      animation-name: sheet-fade-in;
+    }
+
+    .cdk-dialog-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cdk-dialog-container > * {
+      flex: 1;
+      min-height: 0;
+    }
+  }
+
+  @keyframes sheet-in {
+    from {
+      transform: translateY(40%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes sheet-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  :focus-visible {
+    @include mixins.focus-ring;
+  }
+}

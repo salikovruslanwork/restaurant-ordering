@@ -1,0 +1,109 @@
+@use '@angular/material' as mat;
+@use 'breakpoints';
+@use 'tokens' as t;
+
+@mixin size($height, $padding, $font-size) {
+  @include mat.button-overrides(
+    (
+      filled-container-height: $height,
+      filled-horizontal-padding: $padding,
+      filled-label-text-size: $font-size,
+      tonal-container-height: $height,
+      tonal-horizontal-padding: $padding,
+      tonal-label-text-size: $font-size,
+      outlined-container-height: $height,
+      outlined-horizontal-padding: $padding,
+      outlined-label-text-size: $font-size,
+      text-container-height: $height,
+      text-label-text-size: $font-size
+    )
+  );
+}
+
+:host {
+  display: inline-flex;
+  max-width: 100%;
+}
+
+:host:has(.button--block) {
+  display: flex;
+  width: 100%;
+}
+
+.button:not(.button--icon, .button--fab) {
+  width: 100%;
+}
+
+.button {
+  @include breakpoints.mobile {
+    @include size(48px, t.$space-5, 14px);
+  }
+}
+
+.button__content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.button--small {
+  @include size(32px, t.$space-3, 12px);
+
+  @include breakpoints.mobile {
+    @include size(40px, t.$space-3, 12px);
+  }
+}
+
+.button--block {
+  @include size(48px, t.$space-5, 14px);
+}
+
+.button--danger {
+  @include mat.button-overrides(
+    (
+      filled-container-color: t.$color-error,
+      filled-label-text-color: t.$color-on-error
+    )
+  );
+}
+
+.button--outlined-danger {
+  @include mat.button-overrides(
+    (
+      outlined-label-text-color: t.$color-error,
+      outlined-outline-color: t.$color-error
+    )
+  );
+}
+
+.button--text-danger {
+  @include mat.button-overrides(
+    (
+      text-label-text-color: t.$color-error
+    )
+  );
+}
+
+.button--busy {
+  cursor: progress;
+
+  @include mat.button-overrides(
+    (
+      filled-disabled-container-color: t.$color-primary,
+      filled-disabled-label-text-color: t.$color-on-primary,
+      tonal-disabled-container-color: t.$color-primary-container,
+      tonal-disabled-label-text-color: t.$color-on-primary-container
+    )
+  );
+}
+
+.button--icon.button--small {
+  @include mat.icon-button-overrides(
+    (
+      icon-size: 18px,
+      state-layer-size: 32px
+    )
+  );
+}

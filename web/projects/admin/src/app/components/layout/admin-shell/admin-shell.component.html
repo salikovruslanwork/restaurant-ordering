@@ -1,0 +1,13 @@
+<div class="admin-shell">
+  <div class="admin-shell__top">
+    <app-header badge="Admin" name="Tea House" slim [connectionStatus]="connectionStatus()" />
+    <app-connection-banner [status]="connectionStatus()" />
+  </div>
+  <div class="admin-shell__body">
+    <app-admin-nav class="admin-shell__nav" [badges]="navBadges()" [items]="navItems" />
+    <!-- Virtual lists in the pages scroll with the page, so headers and toolbars scroll away. -->
+    <main class="admin-shell__main" cdkVirtualScrollingElement>
+      <router-outlet />
+    </main>
+  </div>
+</div>

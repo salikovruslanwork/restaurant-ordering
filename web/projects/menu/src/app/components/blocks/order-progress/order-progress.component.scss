@@ -1,0 +1,114 @@
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.order-progress {
+  position: relative;
+}
+
+.order-progress--cancelled {
+  opacity: 0.55;
+  filter: grayscale(1);
+}
+
+.order-progress__text {
+  @include mixins.visually-hidden;
+}
+
+.order-progress__track {
+  position: absolute;
+  top: 11px;
+  right: calc(100% / 6);
+  left: calc(100% / 6);
+  height: 3px;
+  border-radius: 2px;
+  background: t.$color-outline-variant;
+}
+
+.order-progress__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: t.$color-primary;
+  transition: width 700ms t.$motion-ease;
+
+  @include mixins.reduced-motion {
+    transition: none;
+  }
+}
+
+.order-progress__steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.order-progress__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: t.$color-on-surface-variant;
+  font: t.$text-label-m;
+  text-align: center;
+
+  @include breakpoints.mobile {
+    font-size: 11px;
+  }
+}
+
+.order-progress__dot {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid t.$color-outline-variant;
+  border-radius: 50%;
+  background: t.$color-surface-container-low;
+  color: t.$color-on-primary;
+  box-sizing: border-box;
+}
+
+.order-progress__step--done .order-progress__dot {
+  border-color: t.$color-primary;
+  background: t.$color-primary;
+}
+
+.order-progress__step--current {
+  color: t.$color-on-surface;
+  font-weight: 600;
+}
+
+.order-progress__step--current .order-progress__dot {
+  border-color: t.$color-primary;
+  background: t.$color-primary;
+  box-shadow: 0 0 0 5px t.$color-primary-container;
+}
+
+.order-progress__pip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: t.$color-on-primary;
+}
+
+.order-progress__step--entered .order-progress__dot {
+  animation: dot-pop 500ms t.$motion-ease-out both;
+
+  @include mixins.reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes dot-pop {
+  from {
+    transform: scale(0.6);
+    box-shadow: 0 0 0 12px t.$color-secondary-container;
+  }
+}

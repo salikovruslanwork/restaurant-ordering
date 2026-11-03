@@ -1,0 +1,31 @@
+@use 'breakpoints';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.menu-grid {
+  display: block;
+}
+
+.menu-grid__row {
+  display: grid;
+  grid-template-columns: repeat(var(--menu-grid-columns, 1), minmax(0, 1fr));
+  gap: t.$space-4;
+  padding-bottom: t.$space-4;
+  box-sizing: border-box;
+
+  @include breakpoints.mobile {
+    gap: t.$space-3;
+    padding-bottom: t.$space-3;
+  }
+}
+
+.menu-grid__item {
+  min-width: 0;
+}
+
+.menu-grid--measuring {
+  visibility: hidden;
+}

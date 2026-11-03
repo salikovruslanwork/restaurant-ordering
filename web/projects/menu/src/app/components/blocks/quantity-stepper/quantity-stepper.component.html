@@ -1,0 +1,26 @@
+<div
+  class="quantity-stepper"
+  role="group"
+  [attr.aria-label]="'Quantity of ' + name()"
+  [class.quantity-stepper--small]="small()"
+>
+  <button
+    class="quantity-stepper__button"
+    type="button"
+    [attr.aria-label]="(value() === 1 && min() === 0 ? 'Remove ' : 'Decrease ') + name()"
+    [disabled]="value() <= min()"
+    (click)="changed.emit(value() - 1)"
+  >
+    <app-icon name="remove" [size]="20" />
+  </button>
+  <span class="quantity-stepper__value" aria-live="polite">{{ value() }}</span>
+  <button
+    class="quantity-stepper__button"
+    type="button"
+    [attr.aria-label]="'Increase ' + name()"
+    [disabled]="value() >= max"
+    (click)="changed.emit(value() + 1)"
+  >
+    <app-icon name="add" [size]="20" />
+  </button>
+</div>

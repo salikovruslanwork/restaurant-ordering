@@ -1,0 +1,55 @@
+<div class="menu-page">
+  <div class="menu-page__main" cdkVirtualScrollingElement>
+    <app-category-bar
+      [categories]="categories()"
+      [loading]="content() === PageContent.Loading"
+      [selectedId]="selectedId()"
+      (selected)="select($event)"
+    />
+    <div class="menu-page__content">
+      @defer (on immediate) {
+        @switch (content()) {
+          @case (PageContent.Loading) {
+            <app-menu-skeleton />
+          }
+          @case (PageContent.Failed) {
+            <app-error-state [text]="loadError" (retry)="retry()" />
+          }
+          @default {
+            <div class="menu-page__heading">
+              <h1 class="menu-page__title">{{ title() }}</h1>
+              @if (items().length > 0) {
+                <span class="menu-page__count">{{
+                  items().length | pluralize: 'dish' : 'dishes'
+                }}</span>
+              }
+            </div>
+            @if (items().length > 0) {
+              <app-menu-grid
+                [items]="items()"
+                [mobile]="isMobile()"
+                [quantities]="quantities()"
+                (added)="add($event)"
+                (openPriceRequested)="askPrice($event)"
+                (quantityChanged)="changeQuantity($event)"
+              />
+            } @else {
+              <app-empty-state
+                heading="The menu is empty right now"
+                icon="restaurant_menu"
+                text="Please check back a little later."
+              />
+            }
+          }
+        }
+      } @placeholder {
+        <app-menu-skeleton />
+      }
+    </div>
+  </div>
+  @if (!isMobile()) {
+    <app-cart-panel class="menu-page__cart" />
+  } @else if (cartSummary().count > 0) {
+    <app-cart-bar class="menu-page__cart-bar" [summary]="cartSummary()" (opened)="openCart()" />
+  }
+</div>

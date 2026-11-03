@@ -1,0 +1,25 @@
+@switch (variant()) {
+  @case (MoneyVariant.Open) {
+    <span class="money money--open">{{ openLabel }}</span>
+  }
+  @case (MoneyVariant.OpenChip) {
+    <span class="money money--open-chip">{{ openChipLabel }}</span>
+  }
+  @default {
+    <span
+      class="money"
+      [class.money--changed]="previousAmount() !== null"
+      [class.money--small]="small()"
+    >
+      @let previous = previousAmount();
+      @if (previous !== null) {
+        <s class="money__old"><span class="money__hidden">was </span>{{ previous | money }}</s>
+      }
+      @let nowLabel = previous !== null ? 'now ' : '';
+      <span class="money__new"
+        ><span class="money__hidden">{{ nowLabel }}</span
+        >{{ amount() ?? 0 | money }}</span
+      >
+    </span>
+  }
+}

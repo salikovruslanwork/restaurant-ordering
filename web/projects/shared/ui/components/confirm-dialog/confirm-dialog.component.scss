@@ -1,0 +1,7 @@
+@use 'tokens' as t;
+
+.confirm-dialog__text {
+  margin: 0;
+  color: t.$color-on-surface-variant;
+  text-align: center;
+}

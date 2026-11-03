@@ -1,0 +1,40 @@
+@use 'breakpoints';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.admin-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+.admin-shell__top {
+  flex: none;
+}
+
+.admin-shell__body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 232px minmax(0, 1fr);
+  min-height: 0;
+
+  @include breakpoints.mobile {
+    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.admin-shell__nav {
+  @include breakpoints.mobile {
+    order: 1;
+  }
+}
+
+.admin-shell__main {
+  min-height: 0;
+  overflow-y: auto;
+  background: t.$color-surface;
+}

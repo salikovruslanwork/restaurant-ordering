@@ -1,0 +1,95 @@
+@use 'tokens' as t;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.cart-panel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: t.$radius-panel;
+  background: t.$color-surface-container;
+}
+
+.cart-panel--sheet {
+  border-radius: 0;
+  background: transparent;
+}
+
+.cart-panel__handle {
+  display: block;
+  flex: none;
+  width: 32px;
+  height: 4px;
+  margin: 10px auto 0;
+  border-radius: 2px;
+  background: t.$color-outline;
+  opacity: 0.4;
+}
+
+.cart-panel__header {
+  display: flex;
+  align-items: center;
+  gap: t.$space-2;
+  padding: t.$space-5 t.$space-5 t.$space-2;
+}
+
+.cart-panel--sheet .cart-panel__header {
+  padding: t.$space-2 t.$space-2 t.$space-2 t.$space-5;
+}
+
+.cart-panel__title {
+  margin: 0 auto 0 0;
+  font: t.$text-title-l;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 3px solid t.$color-primary;
+  }
+}
+
+.cart-panel__count {
+  color: t.$color-on-surface-variant;
+  font: t.$text-label-m;
+}
+
+.cart-panel__lines {
+  flex: 1;
+  min-height: 0;
+  padding: 0 t.$space-5;
+  overflow-y: auto;
+}
+
+.cart-panel__footer {
+  padding: t.$space-4 t.$space-5 t.$space-5;
+  border-top: 1px solid t.$color-outline-variant;
+}
+
+// Same box as the discount form, so the summary doesn't jump when it loads.
+.cart-panel__discount-placeholder {
+  height: 66px;
+  margin-bottom: t.$space-3;
+}
+
+.cart-panel__empty {
+  display: grid;
+  flex: 1;
+  place-items: center;
+}
+
+.cart-panel__hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: t.$space-2 0 0;
+  color: t.$color-on-surface-variant;
+  font: t.$text-body-s;
+}

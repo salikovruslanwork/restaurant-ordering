@@ -1,0 +1,33 @@
+<app-admin-page heading="Categories">
+  @if (content() === PageContent.Ready) {
+    <span appAdminPageMeta
+      >{{ rows().length | pluralize: 'category' : 'categories' }} · shown on the menu in this
+      order</span
+    >
+  }
+  <app-button
+    appAdminPageActions
+    icon="add"
+    [disabled]="isReadOnly() || isCreating() || content() !== PageContent.Ready"
+    (click)="startCreate()"
+    >Add category</app-button
+  >
+
+  @if (content() === PageContent.Failed) {
+    <app-error-state [text]="loadError" (retry)="retry()" />
+  } @else {
+    <app-category-list
+      [busyIds]="busyIds()"
+      [edit]="edit()"
+      [freshIds]="freshIds()"
+      [loading]="content() === PageContent.Loading"
+      [readOnly]="isReadOnly()"
+      [rows]="rows()"
+      (deleteRequested)="requestDelete($event)"
+      (editCancelled)="cancelEdit()"
+      (editStarted)="startEdit($event)"
+      (moved)="move($event)"
+      (saved)="save($event)"
+    />
+  }
+</app-admin-page>

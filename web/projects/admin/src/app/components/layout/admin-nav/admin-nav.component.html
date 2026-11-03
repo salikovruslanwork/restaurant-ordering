@@ -1,0 +1,21 @@
+<nav class="admin-nav" aria-label="Admin sections">
+  @for (item of items(); track item.route) {
+    @let badge = badges()[item.route] ?? 0;
+    <a
+      #link="routerLinkActive"
+      class="admin-nav__item"
+      ariaCurrentWhenActive="page"
+      routerLinkActive="admin-nav__item--active"
+      [attr.aria-label]="badge > 0 ? item.label + ', ' + badge + ' new' : null"
+      [routerLink]="['/', item.route]"
+    >
+      <span class="admin-nav__indicator">
+        <app-icon [filled]="link.isActive" [name]="item.icon" />
+        @if (badge > 0) {
+          <span class="admin-nav__badge" aria-hidden="true">{{ badge }}</span>
+        }
+      </span>
+      <span class="admin-nav__label">{{ item.label }}</span>
+    </a>
+  }
+</nav>

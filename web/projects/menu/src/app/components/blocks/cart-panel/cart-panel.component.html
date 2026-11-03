@@ -1,0 +1,61 @@
+@let totals = summary();
+@if (isSheet) {
+  <span class="cart-panel__handle" aria-hidden="true"></span>
+}
+<section class="cart-panel" aria-labelledby="cart-title" [class.cart-panel--sheet]="isSheet">
+  <div class="cart-panel__header">
+    <h2 #title id="cart-title" class="cart-panel__title" tabindex="-1">Your cart</h2>
+    <span class="cart-panel__count">{{ totals.count | pluralize: 'item' }}</span>
+    @if (isSheet) {
+      <app-button
+        ariaLabel="Close cart"
+        icon="close"
+        [variant]="ButtonVariant.Icon"
+        (click)="close()"
+      />
+    }
+  </div>
+  @if (lines().length === 0) {
+    <div class="cart-panel__empty">
+      <app-empty-state
+        heading="Your cart is empty"
+        icon="shopping_bag"
+        text="Pick something tasty from the menu and it will show up here."
+      >
+        @if (isSheet) {
+          <app-button [variant]="ButtonVariant.Tonal" (click)="close()">Browse the menu</app-button>
+        }
+      </app-empty-state>
+    </div>
+  } @else {
+    <div class="cart-panel__lines">
+      @for (line of lines(); track line.key) {
+        <app-cart-line
+          [line]="line"
+          (quantityChanged)="changeQuantity(line.key, $event)"
+          (removed)="remove(line.key)"
+        />
+      }
+    </div>
+    <div class="cart-panel__footer">
+      @defer (on immediate) {
+        <app-cart-discount
+          [applied]="totals.discount"
+          [discount]="discount()"
+          [subtotal]="totals.subtotal"
+          (discountApplied)="applyDiscount($event)"
+          (discountRemoved)="removeDiscount()"
+        />
+      } @placeholder {
+        <div class="cart-panel__discount-placeholder" aria-hidden="true"></div>
+      }
+      <app-cart-summary [summary]="totals" />
+      <app-button block [disabled]="block() !== null" (click)="checkout()"
+        >Checkout · {{ totals.total | money }}</app-button
+      >
+      @if (block(); as reason) {
+        <p class="cart-panel__hint"><app-icon name="info" [size]="16" />{{ blockHints[reason] }}</p>
+      }
+    </div>
+  }
+</section>

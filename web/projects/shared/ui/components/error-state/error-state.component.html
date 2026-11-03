@@ -1,0 +1,6 @@
+<div class="error-state" role="alert">
+  <span class="error-state__icon"><app-icon name="cloud_off" [size]="36" /></span>
+  <p class="error-state__title">{{ heading() }}</p>
+  <p class="error-state__text">{{ text() }}</p>
+  <app-button icon="refresh" (click)="retry.emit()">{{ retryLabel() }}</app-button>
+</div>

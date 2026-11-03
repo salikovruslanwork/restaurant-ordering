@@ -1,0 +1,125 @@
+@use 'breakpoints';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - #{t.$space-12});
+  overflow: hidden;
+  border-radius: t.$radius-dialog;
+  background: t.$color-surface;
+  box-shadow: t.$elevation-3;
+}
+
+.dialog__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: t.$space-2;
+  padding: t.$space-6 t.$space-6 t.$space-4;
+}
+
+.dialog__close {
+  display: none;
+}
+
+.dialog__title {
+  flex: 1;
+  margin: 0;
+  font: t.$text-headline-s;
+}
+
+.dialog__hero {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.dialog__hero--success {
+  background: t.$color-tertiary-container;
+  color: t.$color-tertiary;
+}
+
+.dialog__hero--warning {
+  background: t.$color-secondary-container;
+  color: t.$color-on-secondary-container;
+}
+
+.dialog__hero--error {
+  background: t.$color-error-container;
+  color: t.$color-error;
+}
+
+.dialog__content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 t.$space-6;
+}
+
+.dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: t.$space-2;
+  padding: t.$space-6;
+}
+
+.dialog--hero .dialog__header {
+  flex-direction: column;
+  gap: t.$space-3;
+  text-align: center;
+}
+
+.dialog--hero .dialog__title {
+  flex: none;
+}
+
+@include breakpoints.mobile {
+  .dialog--form,
+  .dialog--wide,
+  .dialog--medium {
+    height: 100%;
+    max-height: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .dialog--form .dialog__header,
+  .dialog--wide .dialog__header,
+  .dialog--medium .dialog__header {
+    padding: 60px t.$space-4 t.$space-4;
+  }
+
+  .dialog--form .dialog__close,
+  .dialog--wide .dialog__close,
+  .dialog--medium .dialog__close {
+    position: absolute;
+    top: t.$space-2;
+    left: t.$space-1;
+    display: inline-flex;
+  }
+
+  .dialog--form .dialog__content,
+  .dialog--wide .dialog__content,
+  .dialog--medium .dialog__content {
+    padding: 0 t.$space-4;
+  }
+
+  .dialog--form .dialog__actions,
+  .dialog--wide .dialog__actions,
+  .dialog--medium .dialog__actions {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    padding: t.$space-3 t.$space-4 t.$space-4;
+    border-top: 1px solid t.$color-outline-variant;
+  }
+}

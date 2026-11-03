@@ -1,0 +1,67 @@
+<app-admin-page heading="Orders">
+  @if (content() === PageContent.Ready) {
+    <span appAdminPageMeta>{{ placedCount() | pluralize: 'new order' }}</span>
+  }
+
+  @switch (content()) {
+    @case (PageContent.Loading) {
+      <div class="orders-page__skeleton" aria-hidden="true">
+        @for (row of skeletonRows; track row) {
+          <app-skeleton [variant]="SkeletonVariant.Chip" />
+        }
+      </div>
+      <p class="orders-page__status" role="status">Loading…</p>
+    }
+    @case (PageContent.Failed) {
+      <app-error-state [text]="loadError" (retry)="retry()" />
+    }
+    @default {
+      @if (!hasOrders()) {
+        <app-empty-state
+          heading="No orders yet"
+          icon="receipt_long"
+          text="New orders appear here automatically — no need to refresh."
+        />
+      } @else {
+        <app-status-filter
+          [options]="filterOptions()"
+          [value]="statusFilter()"
+          (changed)="filterBy($event)"
+        />
+        @if (rows().length === 0) {
+          <app-empty-state
+            icon="filter_alt_off"
+            text="Orders show up here as soon as they reach this status."
+            [heading]="'No ' + filterLabel() + ' orders'"
+          >
+            <app-button [variant]="ButtonVariant.Tonal" (click)="filterBy(null)"
+              >Show all orders</app-button
+            >
+          </app-empty-state>
+        } @else if (isMobile()) {
+          <div class="orders-page__cards">
+            @for (row of rows(); track row.order.id) {
+              <app-order-admin-card
+                [expanded]="expandedIds().has(row.order.id)"
+                [now]="now()"
+                [readOnly]="isReadOnly()"
+                [row]="row"
+                (statusChanged)="changeStatus($event)"
+                (toggled)="toggle(row.order.id)"
+              />
+            }
+          </div>
+        } @else {
+          <app-orders-table
+            [expandedIds]="expandedIds()"
+            [now]="now()"
+            [readOnly]="isReadOnly()"
+            [rows]="rows()"
+            (statusChanged)="changeStatus($event)"
+            (toggled)="toggle($event)"
+          />
+        }
+      }
+    }
+  }
+</app-admin-page>

@@ -1,0 +1,9 @@
+<div
+  class="dish-image dish-image--{{ size() }} dish-image--{{ tone() }}"
+  role="img"
+  [attr.aria-label]="name()"
+  [class.dish-image--muted]="muted()"
+>
+  <app-icon class="dish-image__icon" [name]="placeholderIcon" [size]="iconSize()" />
+  <span class="dish-image__label">{{ name() }}</span>
+</div>

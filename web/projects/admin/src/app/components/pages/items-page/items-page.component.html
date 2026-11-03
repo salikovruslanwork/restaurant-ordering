@@ -1,0 +1,94 @@
+@let itemList = list();
+<app-admin-page heading="Items">
+  @if (content() === PageContent.Ready) {
+    <span appAdminPageMeta>
+      @if (isFiltered()) {
+        {{ itemList.rows.length }} of {{ itemList.total | pluralize: 'item' }}
+      } @else {
+        {{ itemList.total | pluralize: 'item' }}
+      }
+    </span>
+  }
+
+  @if (content() !== PageContent.Failed) {
+    <app-items-toolbar
+      [addDisabled]="isReadOnly() || content() !== PageContent.Ready"
+      [categories]="categories()"
+      [filter]="filter()"
+      (addClicked)="openEditor(null)"
+      (availabilityChanged)="filterByAvailability($event)"
+      (categoryChanged)="filterByCategory($event)"
+    />
+  }
+
+  @switch (content()) {
+    @case (PageContent.Loading) {
+      <div class="items-page__skeleton" aria-hidden="true">
+        @for (row of skeletonRows; track row) {
+          <div class="items-page__skeleton-row">
+            <app-skeleton [variant]="SkeletonVariant.Image" />
+            <app-skeleton class="items-page__skeleton-text" />
+          </div>
+        }
+      </div>
+      <p class="items-page__status" role="status">Loading…</p>
+    }
+    @case (PageContent.Failed) {
+      <app-error-state [text]="loadError" (retry)="retry()" />
+    }
+    @default {
+      @if (itemList.rows.length === 0) {
+        @if (itemList.total === 0) {
+          <app-empty-state
+            heading="No items yet"
+            icon="restaurant_menu"
+            text="Add the first dish to the menu."
+          />
+        } @else {
+          <app-empty-state
+            heading="No items match these filters"
+            icon="filter_alt_off"
+            text="Try another category or availability."
+          >
+            <app-button [variant]="ButtonVariant.Tonal" (click)="clearFilters()"
+              >Clear filters</app-button
+            >
+          </app-empty-state>
+        }
+      } @else if (isMobile()) {
+        <cdk-virtual-scroll-viewport class="items-page__cards" [itemSize]="cardHeight">
+          <app-item-admin-card
+            *cdkVirtualFor="let row of itemList.rows; trackBy: trackById"
+            class="items-page__card"
+            [fresh]="freshIds().has(row.id)"
+            [readOnly]="isReadOnly()"
+            [row]="row"
+            (availabilityChanged)="changeAvailability({ id: row.id, isAvailable: $event })"
+            (deleteRequested)="requestDelete(row)"
+            (editRequested)="openEditor(row.id)"
+          />
+        </cdk-virtual-scroll-viewport>
+      } @else {
+        <app-items-table
+          [freshIds]="freshIds()"
+          [readOnly]="isReadOnly()"
+          [rows]="itemList.rows"
+          (availabilityChanged)="changeAvailability($event)"
+          (deleteRequested)="requestDelete($event)"
+          (editRequested)="openEditor($event)"
+        />
+      }
+    }
+  }
+</app-admin-page>
+
+@if (content() === PageContent.Ready) {
+  <app-button
+    class="items-page__fab"
+    ariaLabel="Add item"
+    icon="add"
+    [disabled]="isReadOnly()"
+    [variant]="ButtonVariant.Fab"
+    (click)="openEditor(null)"
+  />
+}

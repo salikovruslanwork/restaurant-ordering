@@ -1,0 +1,225 @@
+{
+  "$schema": "../node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "npm",
+    "analytics": false
+  },
+  "newProjectRoot": "projects",
+  "projects": {
+    "menu": {
+      "projectType": "application",
+      "root": "projects/menu",
+      "sourceRoot": "projects/menu/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/menu/src/main.ts",
+            "tsConfig": "projects/menu/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/menu/public"
+              }
+            ],
+            "styles": ["projects/menu/src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/shared/styles"]
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "700kB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "menu:build:production"
+            },
+            "development": {
+              "buildTarget": "menu:build:development"
+            }
+          },
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4400,
+            "proxyConfig": "proxy.conf.mjs"
+          }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "coverageThresholds": {
+              "lines": 90,
+              "functions": 90,
+              "branches": 85,
+              "statements": 90
+            },
+            "coverageReporters": ["text-summary"],
+            "coverageInclude": ["projects/menu/src/**/*.ts"],
+            "coverageExclude": [
+              "projects/menu/src/main.ts",
+              "projects/menu/src/app/app.config.ts",
+              "projects/menu/src/app/app.routes.ts"
+            ]
+          }
+        }
+      }
+    },
+    "admin": {
+      "projectType": "application",
+      "root": "projects/admin",
+      "sourceRoot": "projects/admin/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/admin/src/main.ts",
+            "tsConfig": "projects/admin/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/admin/public"
+              }
+            ],
+            "styles": ["projects/admin/src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/shared/styles"]
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "800kB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "admin:build:production"
+            },
+            "development": {
+              "buildTarget": "admin:build:development"
+            }
+          },
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4401,
+            "proxyConfig": "proxy.conf.mjs"
+          }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "coverageThresholds": {
+              "lines": 90,
+              "functions": 90,
+              "branches": 85,
+              "statements": 90
+            },
+            "coverageReporters": ["text-summary"],
+            "coverageInclude": ["projects/admin/src/**/*.ts"],
+            "coverageExclude": [
+              "projects/admin/src/main.ts",
+              "projects/admin/src/app/app.config.ts",
+              "projects/admin/src/app/app.routes.ts"
+            ]
+          }
+        }
+      }
+    },
+    "shared": {
+      "projectType": "library",
+      "root": "projects/shared",
+      "sourceRoot": "projects/shared",
+      "prefix": "app",
+      "architect": {
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/shared/tsconfig.spec.json",
+            "buildTarget": "menu:build:development",
+            "coverageThresholds": {
+              "lines": 90,
+              "functions": 90,
+              "branches": 85,
+              "statements": 90
+            },
+            "coverageReporters": ["text-summary"],
+            "coverageInclude": ["projects/shared/**/*.ts"]
+          }
+        }
+      }
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component",
+      "style": "scss",
+      "changeDetection": "OnPush"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    }
+  }
+}

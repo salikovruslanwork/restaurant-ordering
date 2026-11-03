@@ -1,0 +1,37 @@
+@use 'tokens' as t;
+
+:host {
+  display: inline-flex;
+  flex: none;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: t.$space-1;
+  height: 28px;
+  padding: 0 10px 0 t.$space-2;
+  border-radius: t.$radius-chip;
+  font: 600 12px/1 t.$font-body;
+  white-space: nowrap;
+}
+
+.status-chip--placed {
+  background: t.$status-placed-bg;
+  color: t.$status-placed-fg;
+}
+
+.status-chip--preparing {
+  background: t.$status-preparing-bg;
+  color: t.$status-preparing-fg;
+}
+
+.status-chip--ready {
+  background: t.$status-ready-bg;
+  color: t.$status-ready-fg;
+}
+
+.status-chip--cancelled {
+  background: t.$status-cancelled-bg;
+  color: t.$status-cancelled-fg;
+}

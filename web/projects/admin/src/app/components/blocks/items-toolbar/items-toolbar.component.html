@@ -1,0 +1,25 @@
+<div class="items-toolbar">
+  <app-select
+    class="items-toolbar__category"
+    label="Category"
+    compact
+    [formControl]="categoryControl"
+    [options]="categoryOptions()"
+  />
+  <div class="items-toolbar__availability">
+    <span class="items-toolbar__label" aria-hidden="true">Availability</span>
+    <app-segmented-button
+      ariaLabel="Availability"
+      [options]="availabilityOptions"
+      [value]="filter().availability"
+      (changed)="availabilityChanged.emit($event)"
+    />
+  </div>
+  <app-button
+    class="items-toolbar__add"
+    icon="add"
+    [disabled]="addDisabled()"
+    (click)="addClicked.emit()"
+    >Add item</app-button
+  >
+</div>

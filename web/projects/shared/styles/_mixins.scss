@@ -1,0 +1,39 @@
+@use 'tokens' as t;
+
+@mixin focus-ring {
+  outline: 3px solid t.$color-primary;
+  outline-offset: 2px;
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Live-change highlight, kept with reduced motion because it only fades. Without a 100% keyframe
+// the colour fades back to the element's own background.
+@mixin highlight-pulse($selector) {
+  #{$selector} {
+    animation: highlight-pulse t.$motion-pulse t.$motion-ease;
+  }
+
+  @keyframes highlight-pulse {
+    0%,
+    55% {
+      background-color: t.$color-highlight;
+    }
+  }
+}

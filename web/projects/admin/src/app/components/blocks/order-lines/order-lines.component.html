@@ -1,0 +1,34 @@
+@let current = order();
+<div class="order-lines" [class.order-lines--inset]="inset()">
+  <ul class="order-lines__list">
+    @for (line of current.lines; track $index) {
+      <li class="order-lines__row">
+        <span class="order-lines__quantity">{{ line.quantity }}×</span>
+        <span
+          >{{ line.name }}
+          @if (line.isOpenPrice) {
+            <span class="order-lines__tag">customer price</span>
+          }
+        </span>
+        <span class="order-lines__money">{{ line.lineTotal | money }}</span>
+      </li>
+    }
+  </ul>
+  <dl class="order-lines__summary">
+    <div class="order-lines__sum">
+      <dt class="order-lines__term">Subtotal</dt>
+      <dd class="order-lines__value">{{ current.subtotal | money }}</dd>
+    </div>
+    @if (current.discount > 0) {
+      <div class="order-lines__sum">
+        <dt class="order-lines__term">Discount</dt>
+        <dd class="order-lines__value">−{{ current.discount | money }}</dd>
+      </div>
+    }
+    <div class="order-lines__sum order-lines__sum--total">
+      <dt class="order-lines__term">Total</dt>
+      <dd class="order-lines__value">{{ current.total | money }}</dd>
+    </div>
+  </dl>
+  <p class="order-lines__meta">Placed at {{ current.createdAt | date: 'shortTime' }}</p>
+</div>

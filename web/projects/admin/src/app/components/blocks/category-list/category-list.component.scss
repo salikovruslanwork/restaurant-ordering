@@ -1,0 +1,114 @@
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.category-list {
+  max-width: 760px;
+  margin: 0;
+  padding: 0;
+  overflow: clip;
+  border-radius: t.$radius-card;
+  background: t.$color-surface-container-low;
+  box-shadow: t.$elevation-1;
+  list-style: none;
+}
+
+.category-list__row {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: t.$space-3;
+  min-height: 64px;
+  padding: 6px t.$space-2 6px t.$space-4;
+  border-bottom: 1px solid t.$color-outline-variant;
+  box-sizing: border-box;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  @include breakpoints.mobile {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 0;
+  }
+}
+
+.category-list__position {
+  color: t.$color-on-surface-variant;
+  font: 600 13px/1 t.$font-body;
+  font-variant-numeric: tabular-nums;
+
+  @include breakpoints.mobile {
+    display: none;
+  }
+}
+
+.category-list__info {
+  min-width: 0;
+}
+
+.category-list__name {
+  margin: 0;
+  overflow: hidden;
+  font: t.$text-title-s;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category-list__count {
+  margin: 2px 0 0;
+  color: t.$color-on-surface-variant;
+  font: t.$text-body-s;
+}
+
+.category-list__sort,
+.category-list__actions {
+  display: flex;
+}
+
+.category-list__form {
+  display: flex;
+  grid-column: 2 / -1;
+  align-items: flex-start;
+  gap: t.$space-3;
+  padding: 6px 0;
+
+  @include breakpoints.mobile {
+    flex-direction: column;
+    grid-column: 1 / -1;
+    align-items: stretch;
+    padding-right: t.$space-2;
+  }
+}
+
+.category-list__field {
+  flex: 1;
+}
+
+.category-list__edit-actions {
+  display: flex;
+  gap: t.$space-1;
+  padding-top: 4px;
+
+  @include breakpoints.mobile {
+    justify-content: flex-end;
+  }
+}
+
+.category-list__skeleton-name {
+  width: 120px;
+}
+
+.category-list__skeleton-count {
+  width: 60px;
+}
+
+.category-list__status {
+  @include mixins.visually-hidden;
+}
+
+@include mixins.highlight-pulse('.category-list__row--fresh');

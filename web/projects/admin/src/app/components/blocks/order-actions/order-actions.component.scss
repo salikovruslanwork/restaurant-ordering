@@ -1,0 +1,26 @@
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.order-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: t.$space-2;
+}
+
+.order-actions--block {
+  justify-content: stretch;
+  padding-top: t.$space-1;
+}
+
+.order-actions--block .order-actions__button {
+  flex: 1;
+}
+
+.order-actions__none {
+  color: t.$color-on-surface-variant;
+  font: t.$text-body-s;
+}

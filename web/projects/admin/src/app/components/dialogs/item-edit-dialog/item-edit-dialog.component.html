@@ -1,0 +1,79 @@
+@let draft = value();
+<form class="item-edit-dialog" novalidate (keydown.escape)="close()" (submit)="save($event)">
+  <app-dialog [closeDisabled]="isSaving()" [size]="DialogSize.Form" (closeRequested)="close()">
+    <span appDialogTitle>{{ title }}</span>
+    <div class="item-edit-dialog__content" appDialogContent>
+      @if (formError(); as message) {
+        <app-form-error [message]="message" />
+      } @else if (isReadOnly()) {
+        <app-form-error [message]="offlineNote" />
+      }
+      <fieldset class="item-edit-dialog__fields" [disabled]="isSaving()">
+        <legend class="item-edit-dialog__legend">Item details</legend>
+        <div class="item-edit-dialog__main">
+          <app-text-field
+            label="Name"
+            [errorMessages]="fieldErrors[ItemFormField.Name]"
+            [formControl]="form.controls.name"
+          />
+          <app-text-field
+            label="Description"
+            [errorMessages]="fieldErrors[ItemFormField.Description]"
+            [formControl]="form.controls.description"
+            [hint]="descriptionHint()"
+            [type]="TextFieldType.Textarea"
+          />
+          <app-select
+            label="Category"
+            placeholder="Choose a category"
+            [errorMessages]="fieldErrors[ItemFormField.CategoryId]"
+            [formControl]="form.controls.categoryId"
+            [options]="categoryOptions()"
+          />
+          <div class="item-edit-dialog__pricing">
+            <span class="item-edit-dialog__label" aria-hidden="true">Pricing</span>
+            <app-segmented-button
+              ariaLabel="Pricing"
+              [options]="pricingOptions"
+              [value]="draft.pricingKind"
+              (changed)="setPricingKind($event)"
+            />
+            @if (draft.pricingKind === PricingKind.Fixed) {
+              <app-text-field
+                class="item-edit-dialog__price"
+                label="Price"
+                labelHidden
+                placeholder="0.00"
+                [errorMessages]="fieldErrors[ItemFormField.Price]"
+                [formControl]="form.controls.price"
+                [type]="TextFieldType.Money"
+              />
+            } @else {
+              <p class="item-edit-dialog__note">{{ openPriceNote }}</p>
+            }
+          </div>
+          <div class="item-edit-dialog__toggle">
+            <div>
+              <p class="item-edit-dialog__toggle-label">Available on the menu</p>
+              <p class="item-edit-dialog__toggle-help">Customers can order it right away</p>
+            </div>
+            <app-switch
+              ariaLabel="Available on the menu"
+              [checked]="draft.isAvailable"
+              [disabled]="isSaving()"
+              (changed)="setAvailable($event)"
+            />
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <ng-container appDialogActions>
+      <app-button [disabled]="isSaving()" [variant]="ButtonVariant.Text" (click)="close()"
+        >Cancel</app-button
+      >
+      <app-button type="submit" [disabled]="isReadOnly()" [loading]="isSaving()">{{
+        isSaving() ? 'Saving…' : 'Save'
+      }}</app-button>
+    </ng-container>
+  </app-dialog>
+</form>

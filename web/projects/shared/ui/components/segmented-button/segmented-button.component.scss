@@ -1,0 +1,66 @@
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: inline-flex;
+  max-width: 100%;
+
+  @include breakpoints.mobile {
+    display: flex;
+    width: 100%;
+  }
+}
+
+.segmented-button {
+  display: inline-flex;
+  height: 40px;
+  border: 1px solid t.$color-outline;
+  border-radius: t.$radius-pill;
+  overflow: hidden;
+
+  @include breakpoints.mobile {
+    display: flex;
+    width: 100%;
+    height: 48px;
+  }
+}
+
+.segmented-button__option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 t.$space-4;
+  border: 0;
+  background: none;
+  color: t.$color-on-surface;
+  font: t.$text-label-l;
+  white-space: nowrap;
+  cursor: pointer;
+
+  & + & {
+    border-left: 1px solid t.$color-outline;
+  }
+
+  &:hover {
+    background: t.$color-surface-container;
+  }
+
+  &:focus-visible {
+    @include mixins.focus-ring;
+
+    outline-offset: -3px;
+  }
+
+  &[aria-pressed='true'] {
+    background: t.$color-primary-container;
+    color: t.$color-on-primary-container;
+  }
+
+  @include breakpoints.mobile {
+    flex: 1;
+    padding: 0 t.$space-2;
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "@restaurant/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start:menu": "cross-env PORT=4400 ng serve menu",
+    "start:admin": "cross-env PORT=4401 ng serve admin",
+    "serve:menu": "node scripts/serve-dist.mjs menu 4400",
+    "serve:admin": "node scripts/serve-dist.mjs admin 4401",
+    "build": "ng build menu && ng build admin",
+    "test": "ng test shared --watch=false --coverage && ng test menu --watch=false --coverage && ng test admin --watch=false --coverage",
+    "lint": "eslint projects && stylelint \"projects/**/*.scss\""
+  },
+  "dependencies": {
+    "@angular/cdk": "^22.2.5",
+    "@angular/common": "^22.2.0",
+    "@angular/compiler": "^22.2.0",
+    "@angular/core": "^22.2.0",
+    "@angular/forms": "^22.2.0",
+    "@angular/material": "^22.2.5",
+    "@angular/platform-browser": "^22.2.0",
+    "@angular/router": "^22.2.0",
+    "@ngrx/effects": "^22.0.1",
+    "@ngrx/entity": "^22.0.1",
+    "@ngrx/operators": "^22.0.1",
+    "@ngrx/store": "^22.0.1",
+    "@restaurant/contracts": "0.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.2.5",
+    "@angular/cli": "^22.2.5",
+    "@angular/compiler-cli": "^22.2.0",
+    "@vitest/coverage-v8": "^5.0.5",
+    "cross-env": "^10.1.0",
+    "jsdom": "^30.0.0",
+    "vitest": "^5.0.0"
+  }
+}

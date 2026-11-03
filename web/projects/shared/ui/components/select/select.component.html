@@ -1,0 +1,32 @@
+<div class="select" [class.select--compact]="compact()" [class.select--error]="errorText()">
+  <label class="select__label" [for]="id">{{ label() }}</label>
+  <div class="select__control">
+    <select
+      #native
+      class="select__native"
+      [attr.aria-describedby]="errorText() ? id + '-error' : null"
+      [attr.aria-invalid]="errorText() ? 'true' : null"
+      [disabled]="isDisabled()"
+      [id]="id"
+      (blur)="onTouched()"
+      (change)="handleSelection(native.value)"
+    >
+      @if (selectedIndex() === -1) {
+        <option disabled hidden selected value="">{{ placeholder() }}</option>
+      }
+      @for (option of options(); track $index) {
+        <option [selected]="$index === selectedIndex()" [value]="$index">{{ option.label }}</option>
+      }
+    </select>
+    <app-icon class="select__chevron" name="arrow_drop_down" />
+  </div>
+  @if (reservesMessage() || errorText()) {
+    <div class="select__message">
+      @if (errorText(); as error) {
+        <p class="select__error" [id]="id + '-error'">
+          <app-icon name="error" [size]="16" />{{ error }}
+        </p>
+      }
+    </div>
+  }
+</div>

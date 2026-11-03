@@ -1,0 +1,62 @@
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.dish-image {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: t.$space-1;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  color: t.$dish-ink;
+  container-type: inline-size;
+  font: t.$text-label-m;
+}
+
+.dish-image--warm {
+  background: t.$dish-warm;
+}
+
+.dish-image--honey {
+  background: t.$dish-honey;
+}
+
+.dish-image--herb {
+  background: t.$dish-herb;
+}
+
+.dish-image--berry {
+  background: t.$dish-berry;
+}
+
+.dish-image--thumb {
+  width: 48px;
+  aspect-ratio: 1;
+  border-radius: t.$radius-thumb;
+}
+
+.dish-image--compact {
+  width: 120px;
+  border-radius: 12px;
+}
+
+@container (width < 160px) {
+  .dish-image__label {
+    display: none;
+  }
+
+  .dish-image--default .dish-image__icon {
+    transform: scale(calc(34 / 44));
+  }
+}
+
+.dish-image--muted {
+  opacity: 0.55;
+  filter: grayscale(0.85);
+}

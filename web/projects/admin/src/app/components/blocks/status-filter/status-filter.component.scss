@@ -1,0 +1,69 @@
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.status-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: t.$space-2;
+  margin-bottom: t.$space-4;
+
+  @include breakpoints.mobile {
+    flex-wrap: nowrap;
+    margin: 0 calc(-1 * #{t.$space-4}) t.$space-3;
+    padding: 4px t.$space-4;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+}
+
+.status-filter__chip {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 t.$space-3;
+  border: 1px solid t.$color-outline-variant;
+  border-radius: t.$radius-chip;
+  background: t.$color-surface;
+  color: t.$color-on-surface;
+  font: t.$text-label-l;
+  cursor: pointer;
+
+  &:hover {
+    background: t.$color-surface-container-low;
+  }
+
+  &:focus-visible {
+    @include mixins.focus-ring;
+  }
+
+  @include breakpoints.mobile {
+    height: 40px;
+  }
+}
+
+.status-filter__chip--active {
+  border-color: transparent;
+  background: t.$color-primary-container;
+  color: t.$color-on-primary-container;
+
+  &:hover {
+    background: t.$color-primary-container;
+  }
+}
+
+.status-filter__count {
+  color: t.$color-on-surface-variant;
+  font: 600 12px/1 t.$font-body;
+  font-variant-numeric: tabular-nums;
+}
+
+.status-filter__chip--active .status-filter__count {
+  color: inherit;
+}

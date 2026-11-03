@@ -1,0 +1,18 @@
+@let totals = summary();
+<button
+  class="cart-bar"
+  type="button"
+  [attr.aria-label]="
+    'View cart, ' + (totals.count | pluralize: 'item') + ', total ' + (totals.total | money)
+  "
+  (click)="opened.emit()"
+>
+  <span class="cart-bar__count">{{ totals.count }}</span>
+  <span class="cart-bar__label"
+    >View cart
+    @if (totals.hasBlockedLines) {
+      <app-icon name="error" [size]="18" />
+    }
+  </span>
+  <span class="cart-bar__total">{{ totals.total | money }}</span>
+</button>

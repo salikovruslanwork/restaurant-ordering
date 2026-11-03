@@ -1,0 +1,109 @@
+@use 'breakpoints';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: t.$space-3;
+  height: t.$size-header;
+  padding: 0 t.$space-4 0 t.$space-5;
+  box-sizing: border-box;
+
+  @include breakpoints.mobile {
+    gap: 0;
+    height: t.$size-header-mobile;
+    padding: 0 t.$space-1 0 t.$space-2;
+  }
+}
+
+.header--slim {
+  height: t.$size-header-admin;
+  border-bottom: 1px solid t.$color-outline-variant;
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+  padding: t.$space-1 t.$space-2 t.$space-1 t.$space-1;
+  border: 0;
+  border-radius: 14px;
+  background: none;
+  color: inherit;
+  text-align: left;
+}
+
+.header__brand--link {
+  cursor: pointer;
+}
+
+.header__logo {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: t.$color-primary;
+  color: t.$color-on-primary;
+
+  @include breakpoints.mobile {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.header__titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.header__name {
+  font: t.$text-title-l;
+
+  @include breakpoints.mobile {
+    font-size: 18px;
+  }
+}
+
+.header__tagline {
+  color: t.$color-on-surface-variant;
+  font: t.$text-label-m;
+
+  @include breakpoints.mobile {
+    display: none;
+  }
+}
+
+.header__role {
+  padding: t.$space-1 t.$space-2;
+  border-radius: 6px;
+  background: t.$color-inverse-surface;
+  color: t.$color-inverse-on-surface;
+  font: 600 10.5px/1 t.$font-body;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.header__indicator {
+  @include breakpoints.mobile {
+    display: none;
+  }
+}
+
+.header__compact-indicator {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  display: none;
+
+  @include breakpoints.mobile {
+    display: block;
+  }
+}

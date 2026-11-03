@@ -1,0 +1,17 @@
+@let totals = summary();
+<dl class="cart-summary">
+  <div class="cart-summary__row">
+    <dt class="cart-summary__term">Subtotal</dt>
+    <dd class="cart-summary__value">{{ totals.subtotal | money }}</dd>
+  </div>
+  @if (totals.discount > 0) {
+    <div class="cart-summary__row cart-summary__row--discount">
+      <dt class="cart-summary__term">Discount</dt>
+      <dd class="cart-summary__value">−{{ totals.discount | money }}</dd>
+    </div>
+  }
+  <div class="cart-summary__row cart-summary__row--total">
+    <dt class="cart-summary__term">Total</dt>
+    <dd class="cart-summary__value">{{ totals.total | money }}</dd>
+  </div>
+</dl>

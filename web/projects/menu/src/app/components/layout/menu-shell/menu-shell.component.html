@@ -1,0 +1,35 @@
+<div class="menu-shell">
+  <div class="menu-shell__top">
+    <app-header
+      brandLabel="Tea House — go to menu"
+      name="Tea House"
+      [connectionStatus]="connectionStatus()"
+      [tagline]="tagline"
+      (brandClicked)="goToMenu()"
+    >
+      <a
+        class="menu-shell__orders"
+        appHeaderActions
+        ariaCurrentWhenActive="page"
+        routerLinkActive="menu-shell__orders--active"
+        [routerLink]="ordersUrl"
+      >
+        <app-icon name="receipt_long" /><span class="menu-shell__orders-label">My orders</span>
+      </a>
+      <span class="menu-shell__cart" appHeaderActions>
+        <app-button
+          icon="shopping_bag"
+          [ariaLabel]="'Cart, ' + (cart().count | pluralize: 'item')"
+          [variant]="ButtonVariant.Icon"
+          (click)="openCart()"
+        />
+        @if (cart().count > 0) {
+          <span class="menu-shell__badge" aria-hidden="true">{{ cart().count }}</span>
+        }
+      </span>
+    </app-header>
+  </div>
+  <main class="menu-shell__main">
+    <router-outlet />
+  </main>
+</div>

@@ -1,0 +1,81 @@
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: inline-block;
+}
+
+.quantity-stepper {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  height: 40px;
+  border-radius: t.$radius-pill;
+  background: t.$color-primary-container;
+  color: t.$color-on-primary-container;
+
+  @include breakpoints.mobile {
+    height: 48px;
+  }
+}
+
+.quantity-stepper--small {
+  height: 32px;
+
+  @include breakpoints.mobile {
+    height: 48px;
+  }
+}
+
+.quantity-stepper__button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    background: currentcolor;
+    opacity: 0;
+    transition: opacity t.$motion-fast;
+  }
+
+  &:hover::before {
+    opacity: 0.1;
+  }
+
+  &:focus-visible {
+    @include mixins.focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+  }
+
+  @include breakpoints.mobile {
+    width: 44px;
+  }
+}
+
+.quantity-stepper--small .quantity-stepper__button {
+  width: 32px;
+}
+
+.quantity-stepper__value {
+  min-width: 22px;
+  font: 600 15px/1 t.$font-body;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}

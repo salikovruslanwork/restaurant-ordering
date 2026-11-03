@@ -1,0 +1,15 @@
+<app-dialog [heroTone]="tone()" [size]="DialogSize.Small">
+  <app-icon appDialogIcon [name]="data.icon" [size]="30" />
+  <span appDialogTitle>{{ data.title }}</span>
+  <p class="confirm-dialog__text" appDialogContent>{{ data.text }}</p>
+  <ng-container appDialogActions>
+    @if (data.cancelLabel; as cancelLabel) {
+      <app-button [variant]="ButtonVariant.Text" (click)="answer(false)">{{
+        cancelLabel
+      }}</app-button>
+    }
+    <app-button [variant]="confirmVariant" (click)="answer(true)">{{
+      data.confirmLabel
+    }}</app-button>
+  </ng-container>
+</app-dialog>

@@ -1,0 +1,91 @@
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.menu-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+.menu-shell__top {
+  flex: none;
+}
+
+.menu-shell__main {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: t.$color-surface;
+}
+
+.menu-shell__cart {
+  position: relative;
+  display: inline-flex;
+}
+
+.menu-shell__badge {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: t.$radius-pill;
+  background: t.$color-primary;
+  color: t.$color-on-primary;
+  font: 600 11px/18px t.$font-body;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.menu-shell__orders {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 t.$space-3;
+  border: 0;
+  border-radius: t.$radius-pill;
+  background: none;
+  color: t.$color-on-surface;
+  font: t.$text-label-l;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background: t.$color-surface-container;
+  }
+
+  &:focus-visible {
+    @include mixins.focus-ring;
+  }
+
+  @include breakpoints.mobile {
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+  }
+}
+
+.menu-shell__orders--active {
+  background: t.$color-primary-container;
+  color: t.$color-on-primary-container;
+
+  &:hover {
+    background: t.$color-primary-container;
+  }
+}
+
+.menu-shell__orders-label {
+  @include breakpoints.mobile {
+    @include mixins.visually-hidden;
+  }
+}

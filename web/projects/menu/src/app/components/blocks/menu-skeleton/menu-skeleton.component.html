@@ -1,0 +1,17 @@
+<div class="menu-skeleton__heading" aria-hidden="true">
+  <app-skeleton class="menu-skeleton__title" [variant]="SkeletonVariant.Title" />
+</div>
+<div class="menu-skeleton__cards" aria-hidden="true">
+  @for (card of cards; track card) {
+    <div class="menu-skeleton__card">
+      <app-skeleton class="menu-skeleton__image" [variant]="SkeletonVariant.Image" />
+      <div class="menu-skeleton__body">
+        <app-skeleton [variant]="SkeletonVariant.Name" />
+        <app-skeleton [variant]="SkeletonVariant.Line" />
+        <app-skeleton class="menu-skeleton__short" [variant]="SkeletonVariant.Line" />
+        <app-skeleton class="menu-skeleton__price" [variant]="SkeletonVariant.Price" />
+      </div>
+    </div>
+  }
+</div>
+<p class="menu-skeleton__status" role="status">Loading the menu…</p>

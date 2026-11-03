@@ -1,0 +1,72 @@
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.cart-discount {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: t.$space-2;
+}
+
+.cart-discount__summary {
+  margin-bottom: t.$space-3;
+}
+
+.cart-discount__apply {
+  margin-top: 26px;
+}
+
+.cart-discount--applied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-discount__label {
+  color: t.$color-on-surface-variant;
+  font: t.$text-label-l;
+}
+
+.cart-discount__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 32px;
+  padding: 0 4px 0 10px;
+  border-radius: t.$radius-chip;
+  background: t.$color-tertiary-container;
+  color: t.$color-on-tertiary-container;
+  font: 600 13px/1 t.$font-body;
+  font-variant-numeric: tabular-nums;
+}
+
+.cart-discount__remove {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background: rgb(30 44 11 / 10%);
+  }
+
+  &:focus-visible {
+    @include mixins.focus-ring;
+  }
+}
+
+.cart-discount__note {
+  margin: t.$space-2 0 0;
+  color: t.$color-on-secondary-container;
+  font: t.$text-body-s;
+}

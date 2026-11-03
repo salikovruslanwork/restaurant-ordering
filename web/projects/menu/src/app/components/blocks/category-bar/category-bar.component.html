@@ -1,0 +1,30 @@
+@if (loading()) {
+  <div class="category-bar" aria-hidden="true">
+    @for (skeleton of skeletons; track skeleton) {
+      <app-skeleton class="category-bar__skeleton" [variant]="SkeletonVariant.Chip" />
+    }
+  </div>
+} @else {
+  <nav class="category-bar" aria-label="Menu categories">
+    <button
+      class="category-bar__chip"
+      type="button"
+      [attr.aria-current]="selectedId() === null || null"
+      [class.category-bar__chip--active]="selectedId() === null"
+      (click)="selected.emit(null)"
+    >
+      All
+    </button>
+    @for (category of categories(); track category.id) {
+      <button
+        class="category-bar__chip"
+        type="button"
+        [attr.aria-current]="selectedId() === category.id || null"
+        [class.category-bar__chip--active]="selectedId() === category.id"
+        (click)="selected.emit(category.id)"
+      >
+        {{ category.name }}
+      </button>
+    }
+  </nav>
+}

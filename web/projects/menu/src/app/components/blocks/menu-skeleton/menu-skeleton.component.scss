@@ -1,0 +1,84 @@
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.menu-skeleton__heading {
+  display: flex;
+  min-height: 34px;
+  margin: t.$space-2 0 t.$space-4;
+
+  @include breakpoints.mobile {
+    min-height: 26px;
+    margin-bottom: t.$space-3;
+  }
+}
+
+.menu-skeleton__title {
+  width: 180px;
+}
+
+.menu-skeleton__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  gap: t.$space-4;
+
+  @include breakpoints.mobile {
+    grid-template-columns: minmax(0, 1fr);
+    gap: t.$space-3;
+  }
+}
+
+.menu-skeleton__card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: t.$radius-card;
+  background: t.$color-surface-container-low;
+
+  @include breakpoints.mobile {
+    flex-direction: row-reverse;
+    height: t.$size-menu-item-mobile;
+
+    &:nth-child(n + 6) {
+      display: none;
+    }
+  }
+}
+
+.menu-skeleton__image {
+  @include breakpoints.mobile {
+    flex: none;
+    width: 120px;
+    margin: t.$space-3 t.$space-3 t.$space-3 0;
+  }
+}
+
+.menu-skeleton__body {
+  display: flex;
+  flex-direction: column;
+  height: t.$size-menu-item-body;
+  padding: t.$space-4;
+  box-sizing: border-box;
+
+  @include breakpoints.mobile {
+    flex: 1;
+    height: auto;
+    padding: t.$space-3 t.$space-2 t.$space-3 t.$space-4;
+  }
+}
+
+.menu-skeleton__short {
+  width: 75%;
+}
+
+.menu-skeleton__price {
+  margin-top: auto;
+}
+
+.menu-skeleton__status {
+  @include mixins.visually-hidden;
+}

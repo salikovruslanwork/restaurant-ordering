@@ -1,0 +1,38 @@
+@use 'breakpoints';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.admin-page {
+  max-width: 1120px;
+  padding: t.$space-5 t.$space-6 t.$space-8;
+
+  @include breakpoints.mobile {
+    padding: t.$space-4 t.$space-4 t.$space-8;
+  }
+}
+
+.admin-page__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: t.$space-3;
+  margin-bottom: t.$space-4;
+}
+
+.admin-page__title {
+  margin: 0;
+  font: t.$text-headline-s;
+}
+
+.admin-page__meta {
+  color: t.$color-on-surface-variant;
+  font: t.$text-label-m;
+}
+
+.admin-page__actions {
+  align-self: center;
+  margin-left: auto;
+}

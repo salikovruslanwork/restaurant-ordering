@@ -1,0 +1,47 @@
+@use 'breakpoints';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.items-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: t.$space-4;
+  margin-bottom: t.$space-4;
+
+  @include breakpoints.mobile {
+    flex-direction: column;
+    align-items: stretch;
+    gap: t.$space-3;
+  }
+}
+
+.items-toolbar__category {
+  width: 220px;
+
+  @include breakpoints.mobile {
+    width: auto;
+  }
+}
+
+.items-toolbar__availability {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.items-toolbar__label {
+  color: t.$color-on-surface-variant;
+  font: t.$text-label-l;
+}
+
+.items-toolbar__add {
+  margin-left: auto;
+
+  @include breakpoints.mobile {
+    display: none;
+  }
+}

@@ -1,0 +1,44 @@
+<form class="open-price-dialog" novalidate (submit)="submit($event)">
+  <app-dialog (closeRequested)="close()">
+    <span appDialogTitle>Set your price</span>
+    <div appDialogContent>
+      <div class="open-price-dialog__item">
+        <app-dish-image
+          class="open-price-dialog__image"
+          [name]="item.name"
+          [size]="DishImageSize.Compact"
+        />
+        <div>
+          <p class="open-price-dialog__name">{{ item.name }}</p>
+          <p class="open-price-dialog__description">{{ item.description }}</p>
+        </div>
+      </div>
+      <p class="open-price-dialog__note">
+        <app-icon class="open-price-dialog__note-icon" name="info" [size]="18" />
+        <span>{{ note }}</span>
+      </p>
+      <app-text-field
+        label="Your price"
+        placeholder="0.00"
+        large
+        [errorMessages]="errors"
+        [formControl]="price"
+        [hint]="hint"
+        [type]="TextFieldType.Money"
+      />
+      <div class="open-price-dialog__quantity">
+        <span>Quantity</span>
+        <app-quantity-stepper
+          min="1"
+          [name]="item.name"
+          [value]="quantity()"
+          (changed)="quantity.set($event)"
+        />
+      </div>
+    </div>
+    <ng-container appDialogActions>
+      <app-button [variant]="ButtonVariant.Text" (click)="close()">Cancel</app-button>
+      <app-button type="submit">{{ submitLabel() }}</app-button>
+    </ng-container>
+  </app-dialog>
+</form>

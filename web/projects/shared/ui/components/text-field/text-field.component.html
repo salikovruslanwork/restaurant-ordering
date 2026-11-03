@@ -1,0 +1,56 @@
+<div
+  class="text-field"
+  [class.text-field--compact]="compact()"
+  [class.text-field--error]="errorText()"
+  [class.text-field--large]="large()"
+  [class.text-field--two-line-message]="twoLineMessage()"
+>
+  <label class="text-field__label" [class.text-field__label--hidden]="labelHidden()" [for]="id">{{
+    label()
+  }}</label>
+  <mat-form-field class="text-field__control" appearance="outline" subscriptSizing="dynamic">
+    @if (type() === TextFieldType.Money) {
+      <span class="text-field__prefix" matTextPrefix>$</span>
+    }
+    @if (type() === TextFieldType.Textarea) {
+      <textarea
+        #textarea
+        class="text-field__textarea"
+        matInput
+        [aria-describedby]="describedBy()"
+        [disabled]="isDisabled()"
+        [errorStateMatcher]="errorMatcher"
+        [id]="id"
+        [placeholder]="placeholder()"
+        [value]="value()"
+        (blur)="handleBlur()"
+        (input)="handleInput(textarea.value)"
+      ></textarea>
+    } @else {
+      <input
+        #field
+        class="text-field__input"
+        matInput
+        [aria-describedby]="describedBy()"
+        [attr.inputmode]="type() === TextFieldType.Money ? 'decimal' : null"
+        [class.text-field__input--money]="type() === TextFieldType.Money"
+        [disabled]="isDisabled()"
+        [errorStateMatcher]="errorMatcher"
+        [id]="id"
+        [placeholder]="placeholder()"
+        [value]="value()"
+        (blur)="handleBlur()"
+        (input)="handleInput(field.value)"
+      />
+    }
+  </mat-form-field>
+  <div class="text-field__message">
+    @if (errorText(); as error) {
+      <p class="text-field__error" [id]="id + '-error'">
+        <app-icon name="error" [size]="16" />{{ error }}
+      </p>
+    } @else if (hint(); as hintText) {
+      <p class="text-field__help" [id]="id + '-hint'">{{ hintText }}</p>
+    }
+  </div>
+</div>

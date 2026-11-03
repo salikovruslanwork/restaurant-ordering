@@ -1,0 +1,16 @@
+<div class="segmented-button" role="group" [attr.aria-label]="ariaLabel()">
+  @for (option of options(); track $index) {
+    @let isSelected = option.value === value();
+    <button
+      class="segmented-button__option"
+      type="button"
+      [attr.aria-pressed]="isSelected"
+      (click)="select(option.value)"
+    >
+      @if (isSelected) {
+        <app-icon name="check" [size]="18" />
+      }
+      <span>{{ option.label }}</span>
+    </button>
+  }
+</div>

@@ -1,0 +1,75 @@
+@use 'sass:list';
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+$skeleton-widths: 44px, 80px, 66px, 62px, 56px, 62px, 62px, 54px, 80px;
+
+:host {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  display: block;
+  background: t.$color-surface;
+}
+
+.category-bar {
+  display: flex;
+  gap: t.$space-2;
+  padding: t.$space-2 t.$space-6 t.$space-3;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  @include breakpoints.mobile {
+    padding: t.$space-1 t.$space-4 t.$space-2;
+  }
+}
+
+.category-bar__chip {
+  flex: none;
+  height: 36px;
+  padding: 0 t.$space-4;
+  border: 1px solid t.$color-outline-variant;
+  border-radius: t.$radius-chip;
+  background: t.$color-surface;
+  color: t.$color-on-surface;
+  font: t.$text-label-l;
+  cursor: pointer;
+  transition: background t.$motion-fast t.$motion-ease;
+
+  &:hover {
+    background: t.$color-surface-container-low;
+  }
+
+  &:focus-visible {
+    @include mixins.focus-ring;
+  }
+
+  @include breakpoints.mobile {
+    height: 40px;
+  }
+
+  @include mixins.reduced-motion {
+    transition: none;
+  }
+}
+
+.category-bar__chip--active {
+  border-color: transparent;
+  background: t.$color-primary-container;
+  color: t.$color-on-primary-container;
+
+  &:hover {
+    background: t.$color-primary-container;
+  }
+}
+
+.category-bar__skeleton {
+  flex: none;
+
+  @for $i from 1 through list.length($skeleton-widths) {
+    &:nth-child(#{$i}) {
+      width: list.nth($skeleton-widths, $i);
+    }
+  }
+}

@@ -1,0 +1,32 @@
+@let item = row();
+<article class="item-admin-card" [class.item-admin-card--fresh]="fresh()">
+  <app-dish-image [muted]="!item.isAvailable" [name]="item.name" [size]="DishImageSize.Thumb" />
+  <div class="item-admin-card__info">
+    <p class="item-admin-card__name">{{ item.name }}</p>
+    <p class="item-admin-card__meta">
+      <span class="item-admin-card__category">{{ item.categoryName }}</span> ·
+      @if (item.pricing.kind === PricingKind.Fixed) {
+        <app-money small [amount]="item.pricing.price" />
+      } @else {
+        <app-money [variant]="MoneyVariant.OpenChip" />
+      }
+      @if (item.isSaving) {
+        · Saving…
+      } @else if (!item.isAvailable) {
+        · Unavailable
+      }
+    </p>
+  </div>
+  <app-switch
+    [ariaLabel]="item.name + ' available'"
+    [checked]="item.isAvailable"
+    [disabled]="readOnly() || item.isSaving || item.isDeleting"
+    (changed)="availabilityChanged.emit($event)"
+  />
+  <app-action-menu
+    [ariaLabel]="'More actions for ' + item.name"
+    [disabled]="readOnly() || item.isDeleting"
+    [items]="actions"
+    (selected)="select($event)"
+  />
+</article>

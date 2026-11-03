@@ -1,0 +1,68 @@
+@let view = line();
+<div class="cart-line" [class.cart-line--blocked]="view.isBlocked">
+  <app-dish-image
+    class="cart-line__thumb"
+    [muted]="view.isBlocked"
+    [name]="view.name"
+    [size]="DishImageSize.Thumb"
+  />
+  <div class="cart-line__info">
+    <p class="cart-line__name">{{ view.name }}</p>
+    <span class="cart-line__meta">
+      @if (view.isCustomPrice) {
+        <span class="cart-line__your-price">Your price</span> ·
+      }
+      {{ view.unitPrice | money }} each
+    </span>
+  </div>
+  <span class="cart-line__total">{{ view.lineTotal | money }}</span>
+  <div class="cart-line__controls">
+    @if (view.isBlocked) {
+      <span></span>
+      <app-button
+        icon="delete"
+        [ariaLabel]="'Remove ' + view.name"
+        [size]="ButtonSize.Small"
+        [variant]="ButtonVariant.OutlinedDanger"
+        (click)="removed.emit()"
+        >Remove</app-button
+      >
+    } @else {
+      <app-quantity-stepper
+        small
+        [name]="view.name"
+        [value]="view.quantity"
+        (changed)="quantityChanged.emit($event)"
+      />
+      <app-button
+        icon="delete"
+        [ariaLabel]="'Remove ' + view.name"
+        [size]="ButtonSize.Small"
+        [variant]="ButtonVariant.Icon"
+        (click)="removed.emit()"
+      />
+    }
+  </div>
+  @switch (view.issue) {
+    @case (CartChangeKind.PriceChanged) {
+      <p class="cart-line__warning cart-line__warning--price">
+        <app-icon name="sell" [size]="16" />
+        <span
+          >Price changed: <s>{{ view.seenPrice | money }}</s> → {{ view.unitPrice | money }}</span
+        >
+      </p>
+    }
+    @case (CartChangeKind.Unavailable) {
+      <p class="cart-line__warning cart-line__warning--error">
+        <app-icon name="block" [size]="16" />
+        <span>No longer available — remove to continue</span>
+      </p>
+    }
+    @case (CartChangeKind.Removed) {
+      <p class="cart-line__warning cart-line__warning--error">
+        <app-icon name="remove_shopping_cart" [size]="16" />
+        <span>Removed from the menu — remove to continue</span>
+      </p>
+    }
+  }
+</div>

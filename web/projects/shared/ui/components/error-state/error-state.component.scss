@@ -1,0 +1,33 @@
+@use 'tokens' as t;
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: t.$space-2;
+  max-width: 380px;
+  margin: 0 auto;
+  padding: t.$space-12 t.$space-6;
+  text-align: center;
+}
+
+.error-state__icon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: t.$space-2;
+  border-radius: 50%;
+  background: t.$color-error-container;
+  color: t.$color-error;
+}
+
+.error-state__title {
+  margin: 0;
+  font: t.$text-title-l;
+}
+
+.error-state__text {
+  margin: 0 0 t.$space-3;
+  color: t.$color-on-surface-variant;
+}

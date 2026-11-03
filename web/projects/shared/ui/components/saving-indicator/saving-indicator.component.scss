@@ -1,0 +1,10 @@
+@use 'tokens' as t;
+
+.saving-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: t.$color-on-surface-variant;
+  font: t.$text-label-m;
+  white-space: nowrap;
+}

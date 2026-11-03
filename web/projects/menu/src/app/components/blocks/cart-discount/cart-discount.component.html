@@ -1,0 +1,38 @@
+@if (discount() > 0) {
+  <div class="cart-discount__summary">
+    <div class="cart-discount cart-discount--applied">
+      <span class="cart-discount__label">Discount</span>
+      <span class="cart-discount__chip"
+        >−{{ discount() | money }}
+        <button
+          class="cart-discount__remove"
+          aria-label="Remove discount"
+          type="button"
+          (click)="discountRemoved.emit()"
+        >
+          <app-icon name="close" [size]="16" /></button
+      ></span>
+    </div>
+    @if (applied() < discount()) {
+      <p class="cart-discount__note">
+        Reduced to {{ applied() | money }} — a discount can’t be more than the subtotal.
+      </p>
+    }
+  </div>
+} @else {
+  <form class="cart-discount" novalidate (submit)="apply($event)">
+    <app-text-field
+      class="cart-discount__field"
+      label="Discount"
+      placeholder="0.00"
+      compact
+      twoLineMessage
+      [errorMessages]="errors()"
+      [formControl]="amount"
+      [type]="TextFieldType.Money"
+    />
+    <app-button class="cart-discount__apply" type="submit" [variant]="ButtonVariant.Tonal"
+      >Apply</app-button
+    >
+  </form>
+}

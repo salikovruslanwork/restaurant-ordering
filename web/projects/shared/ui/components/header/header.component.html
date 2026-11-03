@@ -1,0 +1,38 @@
+<ng-template #brand>
+  <span class="header__logo">
+    <app-icon [name]="logoIcon" />
+    <app-connection-indicator
+      class="header__compact-indicator"
+      compact
+      [status]="connectionStatus()"
+    />
+  </span>
+  <span class="header__titles">
+    <span class="header__name">{{ name() }}</span>
+    @if (tagline(); as text) {
+      <span class="header__tagline">{{ text }}</span>
+    }
+  </span>
+  @if (badge(); as label) {
+    <span class="header__role">{{ label }}</span>
+  }
+</ng-template>
+
+<header class="header" [class.header--slim]="slim()">
+  @if (brandLabel(); as label) {
+    <button
+      class="header__brand header__brand--link"
+      type="button"
+      [attr.aria-label]="label"
+      (click)="brandClicked.emit()"
+    >
+      <ng-container [ngTemplateOutlet]="brand" />
+    </button>
+  } @else {
+    <div class="header__brand">
+      <ng-container [ngTemplateOutlet]="brand" />
+    </div>
+  }
+  <app-connection-indicator class="header__indicator" [status]="connectionStatus()" />
+  <ng-content select="[appHeaderActions]" />
+</header>

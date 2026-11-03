@@ -1,0 +1,21 @@
+@use '@angular/material' as mat;
+@use 'tokens' as t;
+
+:host {
+  display: inline-flex;
+  flex: none;
+}
+
+.action-menu__content {
+  display: inline-flex;
+  align-items: center;
+  gap: t.$space-3;
+}
+
+.action-menu__item--danger {
+  @include mat.menu-overrides(
+    (
+      item-label-text-color: t.$color-error
+    )
+  );
+}

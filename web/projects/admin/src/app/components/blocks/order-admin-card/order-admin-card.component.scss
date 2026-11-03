@@ -1,0 +1,66 @@
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.order-admin-card {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-2;
+  padding: t.$space-4;
+  border-radius: t.$radius-card;
+  background: t.$color-surface-container-low;
+  box-shadow: t.$elevation-1;
+}
+
+.order-admin-card--fresh {
+  animation: ring-pulse t.$motion-pulse t.$motion-ease both;
+
+  @include mixins.reduced-motion {
+    animation: none;
+  }
+}
+
+.order-admin-card__header {
+  display: flex;
+  align-items: center;
+  gap: t.$space-2;
+}
+
+.order-admin-card__number {
+  margin: 0;
+  font: t.$text-title-m;
+  font-variant-numeric: tabular-nums;
+}
+
+.order-admin-card__time {
+  margin-right: auto;
+  color: t.$color-on-surface-variant;
+  font: t.$text-body-s;
+}
+
+.order-admin-card__items {
+  margin: 0;
+  color: t.$color-on-surface-variant;
+}
+
+.order-admin-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@keyframes ring-pulse {
+  0%,
+  60% {
+    box-shadow:
+      0 0 0 3px t.$color-secondary,
+      t.$elevation-1;
+  }
+
+  100% {
+    box-shadow: t.$elevation-1;
+  }
+}

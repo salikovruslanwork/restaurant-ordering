@@ -1,0 +1,11 @@
+.claude/
+.idea/
+.DS_Store
+claude/
+skills-lock.json
+node_modules/
+dist/
+coverage/
+.angular/
+server/data/db.json
+server/data/db.json.tmp

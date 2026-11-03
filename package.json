@@ -1,0 +1,40 @@
+{
+  "name": "restaurant",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "contracts",
+    "server",
+    "web"
+  ],
+  "scripts": {
+    "start": "npm run build -w contracts && concurrently --kill-others-on-fail --names server,menu,admin \"npm run start -w server\" \"npm run start:menu -w web\" \"npm run start:admin -w web\"",
+    "start:fresh": "npm run reset:data && npm start",
+    "start:empty": "npm run clear:data && npm start",
+    "start:prod": "npm run build && concurrently --kill-others-on-fail --names server,menu,admin \"npm run start:prod -w server\" \"npm run serve:menu -w web\" \"npm run serve:admin -w web\"",
+    "start:front": "npm run build -w contracts && concurrently --kill-others-on-fail --names menu,admin \"npm run start:menu -w web\" \"npm run start:admin -w web\"",
+    "start:back": "npm run build -w contracts && npm run start -w server",
+    "reset:data": "npm run reset -w server",
+    "clear:data": "npm run clear -w server",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+    "angular-eslint": "^22.6.0",
+    "concurrently": "^10.0.6",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.10",
+    "prettier-plugin-organize-attributes": "^1.0.0",
+    "stylelint": "^17.16.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "stylelint-selector-bem-pattern": "^5.0.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "vitest": "^5.0.5"
+  }
+}

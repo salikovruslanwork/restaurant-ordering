@@ -1,0 +1,114 @@
+@use 'breakpoints';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.menu-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: t.$radius-card;
+  background: t.$color-surface-container-low;
+  box-shadow: t.$elevation-1;
+  box-sizing: border-box;
+  transition: box-shadow t.$motion-medium t.$motion-ease;
+
+  &:hover {
+    box-shadow: t.$elevation-2;
+  }
+
+  @include breakpoints.mobile {
+    flex-direction: row-reverse;
+    transition: none;
+  }
+}
+
+.menu-item__media {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+
+  @include breakpoints.mobile {
+    flex: none;
+    align-self: flex-start;
+    width: 120px;
+    margin: t.$space-3 t.$space-3 t.$space-3 0;
+    border-radius: 12px;
+  }
+}
+
+.menu-item__badge {
+  position: absolute;
+  z-index: 1;
+  top: t.$space-3;
+  left: t.$space-3;
+  padding: 4px t.$space-2;
+  border-radius: t.$radius-chip;
+  background: t.$color-error;
+  color: t.$color-on-error;
+  font: t.$text-label-m;
+
+  @include breakpoints.mobile {
+    top: 6px;
+    left: 6px;
+    padding: 3px 6px;
+    font-size: 11px;
+  }
+}
+
+.menu-item__body {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  height: t.$size-menu-item-body;
+  padding: t.$space-4;
+  box-sizing: border-box;
+
+  @include breakpoints.mobile {
+    flex: 1;
+    min-width: 0;
+    height: auto;
+    padding: t.$space-3 t.$space-2 t.$space-3 t.$space-4;
+  }
+}
+
+.menu-item__name {
+  margin: 0 0 t.$space-1;
+  overflow: hidden;
+  font: t.$text-title-m;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-item__description {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: t.$color-on-surface-variant;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  @include breakpoints.mobile {
+    font: t.$text-body-s;
+  }
+}
+
+.menu-item__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: t.$space-2;
+  min-height: 40px;
+  margin-top: auto;
+}
+
+.menu-item--unavailable .menu-item__name,
+.menu-item--unavailable .menu-item__footer {
+  color: t.$color-on-surface-variant;
+}

@@ -1,0 +1,103 @@
+@use '@angular/material' as mat;
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.text-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.text-field__label {
+  color: t.$color-on-surface-variant;
+  font: t.$text-label-l;
+}
+
+.text-field__label--hidden {
+  @include mixins.visually-hidden;
+}
+
+.text-field__control {
+  width: 100%;
+}
+
+.text-field__prefix {
+  margin-right: t.$space-1;
+  color: t.$color-on-surface-variant;
+  font-weight: 500;
+}
+
+.text-field__input--money {
+  font-variant-numeric: tabular-nums;
+}
+
+.text-field__textarea {
+  min-height: 76px;
+  resize: vertical;
+  font: t.$text-body-m;
+}
+
+// Reserved even when empty, so an appearing error doesn't shift the layout.
+.text-field__message {
+  min-height: 17px;
+}
+
+.text-field--two-line-message .text-field__message {
+  min-height: 34px;
+}
+
+.text-field__error,
+.text-field__help {
+  display: flex;
+  align-items: center;
+  gap: t.$space-1;
+  margin: 0;
+  font: t.$text-body-s;
+}
+
+.text-field__error {
+  color: t.$color-error;
+}
+
+.text-field__help {
+  color: t.$color-on-surface-variant;
+}
+
+.text-field--error .text-field__label {
+  color: t.$color-error;
+}
+
+.text-field--large {
+  @include mat.form-field-overrides(
+    (
+      container-height: 56px,
+      container-vertical-padding: 16px,
+      container-text-size: 22px
+    )
+  );
+}
+
+.text-field--compact {
+  @include mat.form-field-overrides(
+    (
+      container-height: 40px,
+      container-vertical-padding: 8px
+    )
+  );
+
+  @include breakpoints.mobile {
+    @include mat.form-field-overrides(
+      (
+        container-height: 48px,
+        container-vertical-padding: 12px
+      )
+    );
+  }
+}

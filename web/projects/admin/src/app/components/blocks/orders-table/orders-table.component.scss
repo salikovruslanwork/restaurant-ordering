@@ -1,0 +1,146 @@
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+  container-type: inline-size;
+}
+
+// When the columns don't fit, the table scrolls sideways and the actions stay pinned on the right.
+.orders-table {
+  overflow-x: auto;
+  border-radius: t.$radius-card;
+  background: t.$color-surface-container-low;
+  box-shadow: t.$elevation-1;
+}
+
+.orders-table__grid {
+  min-width: 888px;
+
+  @container (width < 960px) {
+    min-width: 780px;
+  }
+}
+
+.orders-table__head {
+  background: t.$color-surface-container;
+}
+
+.orders-table__row {
+  display: grid;
+  grid-template-columns: 56px 84px 108px minmax(160px, 1fr) 96px 148px 236px;
+  align-items: center;
+
+  @container (width < 960px) {
+    grid-template-columns: 56px 84px minmax(160px, 1fr) 96px 148px 236px;
+  }
+}
+
+.orders-table__time {
+  @container (width < 960px) {
+    display: none;
+  }
+}
+
+.orders-table__actions {
+  position: sticky;
+  z-index: 1;
+  right: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: t.$color-surface-container-low;
+}
+
+.orders-table__head .orders-table__actions {
+  background: t.$color-surface-container;
+}
+
+.orders-table__row--order {
+  min-height: 56px;
+  border-top: 1px solid t.$color-outline-variant;
+
+  &:hover {
+    background: rgb(43 31 24 / 3%);
+  }
+}
+
+.orders-table__row--fresh {
+  animation: highlight-pulse t.$motion-pulse t.$motion-ease both;
+
+  @include mixins.reduced-motion {
+    animation-name: highlight-fade;
+  }
+}
+
+.orders-table__heading {
+  padding: 11px t.$space-3;
+  color: t.$color-on-surface-variant;
+  font: 600 12px/1.2 t.$font-body;
+  white-space: nowrap;
+}
+
+.orders-table__heading--end {
+  text-align: right;
+}
+
+.orders-table__hidden {
+  @include mixins.visually-hidden;
+}
+
+.orders-table__cell {
+  min-width: 0;
+  padding: 6px t.$space-3;
+}
+
+.orders-table__cell--muted {
+  color: t.$color-on-surface-variant;
+}
+
+.orders-table__cell--end {
+  text-align: right;
+}
+
+.orders-table__number {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.orders-table__items {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orders-table__detail {
+  padding: 0 t.$space-3 t.$space-4 68px;
+  background: t.$color-surface;
+}
+
+.orders-table__detail-cell {
+  display: block;
+}
+
+@keyframes highlight-pulse {
+  0%,
+  60% {
+    background: t.$color-highlight;
+    box-shadow: inset 3px 0 0 t.$color-secondary;
+  }
+
+  100% {
+    background: transparent;
+    box-shadow: inset 3px 0 0 transparent;
+  }
+}
+
+@keyframes highlight-fade {
+  from {
+    background: t.$color-highlight;
+  }
+
+  to {
+    background: transparent;
+  }
+}

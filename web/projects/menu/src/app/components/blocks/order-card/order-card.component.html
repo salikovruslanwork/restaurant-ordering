@@ -1,0 +1,26 @@
+@let placed = order();
+<article
+  class="order-card"
+  [attr.aria-labelledby]="'order-' + placed.number"
+  [class.order-card--cancelled]="isCancelled()"
+  [class.order-card--fresh]="fresh()"
+>
+  <header class="order-card__header">
+    <div>
+      <h2 class="order-card__number" [id]="'order-' + placed.number">Order #{{ placed.number }}</h2>
+      <p class="order-card__time">{{ placed.createdAt | timeAgo: now() }} · {{ clock() }}</p>
+    </div>
+    <app-status-chip [status]="placed.status" />
+  </header>
+  <p class="order-card__items">{{ summary() }}</p>
+  <app-order-progress [fresh]="fresh()" [order]="placed" />
+  <footer class="order-card__footer">
+    <span
+      >{{ itemCount() | pluralize: 'item' }}
+      @if (placed.discount > 0) {
+        · {{ placed.discount | money }} discount
+      }
+    </span>
+    <span class="order-card__total">{{ placed.total | money }}</span>
+  </footer>
+</article>

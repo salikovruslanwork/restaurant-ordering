@@ -1,0 +1,110 @@
+<ng-template #editor let-label>
+  <form class="category-list__form" novalidate (keydown.escape)="cancel()" (submit)="save($event)">
+    <app-text-field
+      class="category-list__field"
+      labelHidden
+      placeholder="Category name"
+      compact
+      [errorMessages]="nameErrors"
+      [formControl]="nameControl"
+      [label]="label"
+    />
+    <div class="category-list__edit-actions">
+      <app-button
+        [disabled]="isSaving()"
+        [size]="ButtonSize.Small"
+        [variant]="ButtonVariant.Text"
+        (click)="cancel()"
+        >Cancel</app-button
+      >
+      <app-button
+        type="submit"
+        [disabled]="readOnly()"
+        [loading]="isSaving()"
+        [size]="ButtonSize.Small"
+        >Save</app-button
+      >
+    </div>
+  </form>
+</ng-template>
+
+@if (loading()) {
+  <div class="category-list" aria-hidden="true">
+    @for (row of skeletonRows; track row) {
+      <div class="category-list__row">
+        <span></span>
+        <div class="category-list__info">
+          <app-skeleton class="category-list__skeleton-name" />
+          <app-skeleton class="category-list__skeleton-count" />
+        </div>
+      </div>
+    }
+  </div>
+  <p class="category-list__status" role="status">Loading…</p>
+} @else {
+  <ol class="category-list" aria-label="Categories in menu order">
+    @for (row of rows(); track row.id; let index = $index, first = $first, last = $last) {
+      <li
+        class="category-list__row"
+        [attr.aria-busy]="busyRows().has(row.id) || null"
+        [class.category-list__row--fresh]="freshIds().has(row.id)"
+        [attr.data-id]="row.id"
+      >
+        <span class="category-list__position" aria-hidden="true">{{ index + 1 }}</span>
+        @if (edit()?.id === row.id) {
+          <ng-container
+            [ngTemplateOutlet]="editor"
+            [ngTemplateOutletContext]="{ $implicit: 'New name for ' + row.name }"
+          />
+        } @else {
+          <div class="category-list__info">
+            <p class="category-list__name">{{ row.name }}</p>
+            <p class="category-list__count">{{ row.itemCount | pluralize: 'item' }}</p>
+          </div>
+          <div class="category-list__sort">
+            <app-button
+              icon="arrow_upward"
+              [ariaLabel]="'Move ' + row.name + ' up'"
+              [disabled]="first || readOnly() || hasBusyRow()"
+              [variant]="ButtonVariant.Icon"
+              (click)="moved.emit({ id: row.id, direction: MoveDirection.Up })"
+            />
+            <app-button
+              icon="arrow_downward"
+              [ariaLabel]="'Move ' + row.name + ' down'"
+              [disabled]="last || readOnly() || hasBusyRow()"
+              [variant]="ButtonVariant.Icon"
+              (click)="moved.emit({ id: row.id, direction: MoveDirection.Down })"
+            />
+          </div>
+          <div class="category-list__actions">
+            <app-button
+              class="category-list__edit"
+              icon="edit"
+              [ariaLabel]="'Rename ' + row.name"
+              [disabled]="readOnly() || busyRows().has(row.id)"
+              [variant]="ButtonVariant.Icon"
+              (click)="editStarted.emit(row.id)"
+            />
+            <app-button
+              icon="delete"
+              [ariaLabel]="'Delete ' + row.name"
+              [disabled]="readOnly() || busyRows().has(row.id)"
+              [variant]="ButtonVariant.Icon"
+              (click)="deleteRequested.emit(row)"
+            />
+          </div>
+        }
+      </li>
+    }
+    @if (isCreating()) {
+      <li class="category-list__row">
+        <span class="category-list__position" aria-hidden="true">{{ rows().length + 1 }}</span>
+        <ng-container
+          [ngTemplateOutlet]="editor"
+          [ngTemplateOutletContext]="{ $implicit: 'New category name' }"
+        />
+      </li>
+    }
+  </ol>
+}

@@ -1,0 +1,22 @@
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.orders-page__cards {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-2;
+}
+
+.orders-page__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-2;
+}
+
+.orders-page__status {
+  @include mixins.visually-hidden;
+}

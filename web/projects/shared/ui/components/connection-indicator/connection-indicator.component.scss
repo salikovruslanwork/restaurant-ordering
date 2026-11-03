@@ -1,0 +1,58 @@
+@use 'mixins';
+@use 'tokens' as t;
+
+.connection-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 t.$space-1;
+  color: t.$color-on-surface-variant;
+  font: t.$text-label-m;
+}
+
+.connection-indicator__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.connection-indicator__hidden-label {
+  @include mixins.visually-hidden;
+}
+
+.connection-indicator--live .connection-indicator__dot {
+  background: t.$color-tertiary;
+  box-shadow: 0 0 0 3px t.$color-tertiary-container;
+}
+
+.connection-indicator--reconnecting .connection-indicator__dot {
+  background: t.$color-secondary;
+  box-shadow: 0 0 0 3px t.$color-secondary-container;
+  animation: pulse 1s ease-in-out infinite alternate;
+
+  @include mixins.reduced-motion {
+    animation: none;
+  }
+}
+
+.connection-indicator--offline .connection-indicator__dot {
+  background: t.$color-outline;
+  box-shadow: 0 0 0 3px t.$color-neutral-container;
+}
+
+.connection-indicator--compact {
+  padding: 3px;
+  border-radius: 50%;
+  background: t.$color-surface;
+}
+
+.connection-indicator--compact .connection-indicator__dot {
+  box-shadow: none;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0;
+  }
+}

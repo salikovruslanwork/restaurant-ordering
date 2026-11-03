@@ -1,0 +1,58 @@
+@use 'tokens' as t;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.open-price-dialog {
+  height: 100%;
+}
+
+.open-price-dialog__item {
+  display: flex;
+  align-items: center;
+  gap: t.$space-4;
+  margin-bottom: t.$space-4;
+}
+
+.open-price-dialog__image {
+  flex: none;
+  width: 120px;
+  overflow: hidden;
+  border-radius: t.$radius-thumb;
+}
+
+.open-price-dialog__name {
+  margin: 0 0 4px;
+  font: t.$text-title-m;
+}
+
+.open-price-dialog__description {
+  margin: 0;
+  color: t.$color-on-surface-variant;
+  font: t.$text-body-s;
+}
+
+.open-price-dialog__note {
+  display: flex;
+  align-items: flex-start;
+  gap: t.$space-2;
+  margin: 0 0 t.$space-5;
+  padding: t.$space-3;
+  border-radius: t.$radius-field;
+  background: t.$color-surface-container;
+  color: t.$color-on-surface-variant;
+}
+
+.open-price-dialog__note-icon {
+  color: t.$color-primary;
+}
+
+.open-price-dialog__quantity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: t.$space-5 0 t.$space-2;
+  font: t.$text-label-l;
+}

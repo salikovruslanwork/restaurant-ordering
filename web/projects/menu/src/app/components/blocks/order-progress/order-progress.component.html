@@ -1,0 +1,25 @@
+<div class="order-progress" [class.order-progress--cancelled]="isCancelled()">
+  <p class="order-progress__text">{{ text() }}</p>
+  <div class="order-progress__track" aria-hidden="true">
+    <div class="order-progress__fill" [style.width.%]="fill()"></div>
+  </div>
+  <ol class="order-progress__steps" aria-hidden="true">
+    @for (step of steps(); track step.label) {
+      <li
+        class="order-progress__step"
+        [class.order-progress__step--current]="step.isCurrent"
+        [class.order-progress__step--done]="step.isDone"
+        [class.order-progress__step--entered]="step.isCurrent && fresh()"
+      >
+        <span class="order-progress__dot">
+          @if (step.hasCheck) {
+            <app-icon name="check" [size]="16" />
+          } @else if (step.isCurrent) {
+            <span class="order-progress__pip"></span>
+          }
+        </span>
+        <span>{{ step.label }}</span>
+      </li>
+    }
+  </ol>
+</div>

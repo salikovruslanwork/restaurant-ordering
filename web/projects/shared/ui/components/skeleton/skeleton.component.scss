@@ -1,0 +1,78 @@
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.skeleton {
+  display: block;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    t.$color-skeleton 0%,
+    t.$color-skeleton-shine 40%,
+    t.$color-skeleton 80%
+  );
+  background-size: 300% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+
+  @include mixins.reduced-motion {
+    animation: none;
+  }
+}
+
+.skeleton--chip {
+  height: 36px;
+  border-radius: t.$radius-chip;
+}
+
+.skeleton--image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+}
+
+.skeleton--name {
+  width: 60%;
+  height: 18px;
+  margin: 2px 0 t.$space-2;
+}
+
+.skeleton--line {
+  width: 100%;
+  height: 13px;
+  margin-bottom: 7px;
+}
+
+.skeleton--price {
+  width: 64px;
+  height: 18px;
+}
+
+.skeleton--button {
+  width: 84px;
+  height: 40px;
+  border-radius: t.$radius-pill;
+}
+
+.skeleton--title {
+  width: 180px;
+  height: 30px;
+}
+
+.skeleton--progress {
+  width: 100%;
+  height: 46px;
+  border-radius: t.$radius-chip;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: 0 0;
+  }
+}

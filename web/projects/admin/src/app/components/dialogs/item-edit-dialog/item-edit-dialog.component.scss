@@ -1,0 +1,88 @@
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.item-edit-dialog {
+  height: 100%;
+}
+
+.item-edit-dialog__content {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-4;
+}
+
+.item-edit-dialog__fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: t.$space-2;
+  min-width: 0;
+  margin: 0;
+  padding: 0 0 t.$space-2;
+  border: 0;
+
+  &:disabled {
+    opacity: 0.7;
+  }
+}
+
+.item-edit-dialog__legend {
+  @include mixins.visually-hidden;
+}
+
+.item-edit-dialog__main {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-4;
+  min-width: 0;
+}
+
+.item-edit-dialog__pricing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: t.$space-2;
+}
+
+.item-edit-dialog__price {
+  align-self: stretch;
+}
+
+.item-edit-dialog__label {
+  color: t.$color-on-surface-variant;
+  font: t.$text-label-l;
+}
+
+.item-edit-dialog__note {
+  margin: 0;
+  padding: t.$space-3;
+  border-radius: t.$radius-field;
+  background: t.$color-surface-container;
+  color: t.$color-on-surface-variant;
+  font: t.$text-body-s;
+}
+
+.item-edit-dialog__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: t.$space-3;
+  padding: t.$space-3 t.$space-4;
+  border-radius: t.$radius-field;
+  background: t.$color-surface-container-low;
+}
+
+.item-edit-dialog__toggle-label {
+  margin: 0;
+  font: t.$text-title-s;
+}
+
+.item-edit-dialog__toggle-help {
+  margin: 2px 0 0;
+  color: t.$color-on-surface-variant;
+  font: t.$text-body-s;
+}

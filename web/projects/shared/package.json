@@ -1,0 +1,5 @@
+{
+  "name": "@restaurant/shared",
+  "private": true,
+  "sideEffects": false
+}

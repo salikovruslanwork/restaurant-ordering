@@ -1,0 +1,81 @@
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.order-lines {
+  max-width: 520px;
+  padding: t.$space-3 t.$space-4;
+  border-radius: t.$radius-field;
+  background: t.$color-surface-container-low;
+  box-sizing: border-box;
+}
+
+.order-lines--inset {
+  max-width: none;
+  background: t.$color-surface;
+}
+
+.order-lines__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.order-lines__row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  gap: t.$space-2;
+  padding: 5px 0;
+}
+
+.order-lines__quantity {
+  color: t.$color-on-surface-variant;
+  font-variant-numeric: tabular-nums;
+}
+
+.order-lines__tag {
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: t.$color-secondary-container;
+  color: t.$color-on-secondary-container;
+  font: t.$text-label-m;
+  white-space: nowrap;
+}
+
+.order-lines__money {
+  font: 500 14px/1.45 t.$font-body;
+  font-variant-numeric: tabular-nums;
+}
+
+.order-lines__summary {
+  margin: t.$space-2 0 0;
+  padding-top: t.$space-2;
+  border-top: 1px solid t.$color-outline-variant;
+}
+
+.order-lines__sum {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0;
+  color: t.$color-on-surface-variant;
+  font-variant-numeric: tabular-nums;
+}
+
+.order-lines__term,
+.order-lines__value {
+  margin: 0;
+}
+
+.order-lines__sum--total {
+  color: t.$color-on-surface;
+  font-weight: 600;
+}
+
+.order-lines__meta {
+  margin: t.$space-2 0 0;
+  color: t.$color-on-surface-variant;
+  font: t.$text-body-s;
+}

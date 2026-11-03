@@ -1,0 +1,134 @@
+@use 'breakpoints';
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-1;
+  height: 100%;
+  padding: t.$space-3;
+  border-right: 1px solid t.$color-outline-variant;
+  background: t.$color-surface-container-low;
+  box-sizing: border-box;
+
+  @include breakpoints.mobile {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    gap: 0;
+    height: 80px;
+    padding: 0;
+    border-right: 0;
+    background: t.$color-surface-container;
+  }
+}
+
+.admin-nav__item {
+  display: flex;
+  align-items: center;
+  gap: t.$space-3;
+  height: t.$size-touch;
+  padding: 0 t.$space-4;
+  border-radius: t.$radius-pill;
+  color: t.$color-on-surface-variant;
+  font: t.$text-label-l;
+  text-decoration: none;
+  transition: background t.$motion-fast t.$motion-ease;
+
+  &:hover {
+    background: t.$color-surface-container;
+  }
+
+  &:focus-visible {
+    @include mixins.focus-ring;
+  }
+
+  @include breakpoints.mobile {
+    flex-direction: column;
+    justify-content: center;
+    gap: t.$space-1;
+    height: 100%;
+    padding: 0;
+    border-radius: 0;
+    font: t.$text-label-m;
+
+    &:hover {
+      background: none;
+    }
+  }
+}
+
+.admin-nav__item--active {
+  background: t.$color-primary-container;
+  color: t.$color-on-primary-container;
+  font-weight: 600;
+
+  &:hover {
+    background: t.$color-primary-container;
+  }
+
+  @include breakpoints.mobile {
+    background: none;
+
+    &:hover {
+      background: none;
+    }
+  }
+}
+
+.admin-nav__indicator {
+  position: relative;
+  display: contents;
+
+  @include breakpoints.mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 32px;
+    border-radius: 16px;
+  }
+}
+
+.admin-nav__badge {
+  order: 1;
+  min-width: 22px;
+  height: 20px;
+  margin-left: auto;
+  padding: 0 6px;
+  border-radius: t.$radius-pill;
+  background: t.$color-primary;
+  color: t.$color-on-primary;
+  font: 600 11px/20px t.$font-body;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  box-sizing: border-box;
+
+  @include breakpoints.mobile {
+    position: absolute;
+    top: -4px;
+    left: 36px;
+    min-width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0 5px;
+    line-height: 18px;
+  }
+}
+
+.admin-nav__item--active .admin-nav__indicator {
+  @include breakpoints.mobile {
+    background: t.$color-primary-container;
+  }
+}
+
+@include mixins.reduced-motion {
+  .admin-nav__item {
+    transition: none;
+  }
+}

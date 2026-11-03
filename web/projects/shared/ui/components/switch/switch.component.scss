@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+@use 'tokens' as t;
+
+:host {
+  display: inline-flex;
+  flex: none;
+}
+
+.switch {
+  display: inline-flex;
+
+  @include mat.slide-toggle-overrides(
+    (
+      unselected-handle-color: t.$color-outline,
+      unselected-hover-handle-color: t.$color-outline,
+      unselected-focus-handle-color: t.$color-outline,
+      unselected-pressed-handle-color: t.$color-outline,
+      unselected-icon-color: t.$color-outline,
+      unselected-track-color: t.$color-surface-container-high,
+      track-outline-color: t.$color-outline
+    )
+  );
+}

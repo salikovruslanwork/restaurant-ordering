@@ -1,0 +1,95 @@
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.cart-line {
+  display: grid;
+  grid-template-areas:
+    'thumb info total'
+    '. controls controls'
+    'warn warn warn';
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px t.$space-3;
+  padding: t.$space-3 0;
+  border-bottom: 1px solid t.$color-outline-variant;
+}
+
+.cart-line__thumb {
+  grid-area: thumb;
+  overflow: hidden;
+  border-radius: t.$radius-thumb;
+}
+
+.cart-line__info {
+  grid-area: info;
+  min-width: 0;
+}
+
+.cart-line__name {
+  margin: 0 0 2px;
+  overflow: hidden;
+  font: t.$text-label-l;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-line__meta {
+  color: t.$color-on-surface-variant;
+  font: t.$text-body-s;
+  font-variant-numeric: tabular-nums;
+}
+
+.cart-line__your-price {
+  color: t.$color-primary;
+  font-weight: 600;
+}
+
+.cart-line__total {
+  grid-area: total;
+  font: 600 15px/1.4 t.$font-body;
+  font-variant-numeric: tabular-nums;
+}
+
+.cart-line__controls {
+  display: flex;
+  grid-area: controls;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-line__warning {
+  display: flex;
+  grid-area: warn;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 6px t.$space-2;
+  border-radius: t.$radius-chip;
+  font: t.$text-label-m;
+}
+
+.cart-line__warning--price {
+  background: t.$color-secondary-container;
+  color: t.$color-on-secondary-container;
+}
+
+.cart-line__warning--error {
+  background: t.$color-error-container;
+  color: t.$color-on-error-container;
+}
+
+.cart-line--blocked .cart-line__name {
+  color: t.$color-on-surface-variant;
+}
+
+.cart-line--blocked .cart-line__total {
+  color: t.$color-on-surface-variant;
+  text-decoration: line-through;
+}
+
+:host(:last-child) .cart-line {
+  border-bottom: 0;
+}

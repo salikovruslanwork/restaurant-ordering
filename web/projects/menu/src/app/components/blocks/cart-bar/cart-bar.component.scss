@@ -1,0 +1,51 @@
+@use 'mixins';
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+.cart-bar {
+  display: flex;
+  align-items: center;
+  gap: t.$space-3;
+  width: 100%;
+  height: 56px;
+  padding: 0 t.$space-5 0 t.$space-3;
+  border: 0;
+  border-radius: t.$radius-pill;
+  background: t.$color-primary;
+  color: t.$color-on-primary;
+  box-shadow: t.$elevation-3;
+  font: t.$text-label-l;
+  cursor: pointer;
+
+  &:focus-visible {
+    @include mixins.focus-ring;
+  }
+}
+
+.cart-bar__count {
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 6px;
+  border-radius: t.$radius-pill;
+  background: rgb(255 255 255 / 20%);
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+.cart-bar__label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 6px;
+  text-align: left;
+}
+
+.cart-bar__total {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
